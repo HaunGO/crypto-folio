@@ -1,0 +1,44 @@
+html,
+body {
+  background-color: Lightgray;
+  font-family: monospace; }
+
+.vueBlock {
+  border: 1px solid gray;
+  margin: 0.5em;
+  padding: 0.5em; }
+
+.txt-highlight {
+  color: Indianred; }
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold; }
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold; }
+
+h3 {
+  font-weight: bold; }
+
+h4 {
+  font-size: 1rem; }
+
+h5 {
+  font-size: 0.9rem; }
+
+h6 {
+  font-size: 0.7rem; }
+
+.bg-red, .bgRed {
+  background-color: indianred; }
+
+.bg-blue, .bgBlue {
+  background-color: steelblue; }
+
+.bg-green, .bgGreen {
+  background-color: forestgreen; }
+
+.devBorder {
+  border: 1px dotted green; }

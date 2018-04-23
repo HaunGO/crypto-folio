@@ -1,0 +1,22 @@
+{
+	"build": {
+		"js": {
+			"dist/assets/js/site.min.js" : "src/js/site.js",
+			"dist/assets/js/bundle.min.js" : [
+				"src/js/bundle.js",
+				"node_modules/jquery/dist/jquery.min.js",
+				"node_modules/rxjs/bundles/Rx.min.js",
+				"node_modules/vue/dist/vue.min.js"
+			]
+		},
+		"css": {
+			"dist/assets/css/site.css" : "src/scss/site.scss"
+		},
+		"twig": {
+		    "dist/index.html": "src/index.html.twig"
+		},
+		"browserSync": {
+			"server": "dist/"
+		}
+	}
+}

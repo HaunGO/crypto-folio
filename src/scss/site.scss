@@ -1,0 +1,166 @@
+
+
+
+@import "globals/vars.scss";
+
+
+html,
+body{
+    background-color:$colorBodyBg;
+    font-family:monospace;
+}
+
+.vueBlock{
+    border:1px solid gray;
+    margin:0.5em;
+    padding:0.5em;
+}
+
+.txt-highlight{
+    color: $colorHighlight
+}
+
+// .is-active{
+//     color:gold;
+//     >a{
+//         color:$colorHighlight;
+//     }
+// }
+
+h1{
+    font-size:1.5rem;
+    font-weight:bold;
+}
+h2{
+    font-size:1.2rem;
+    font-weight:bold;
+}
+h3{
+    font-weight:bold;
+}
+h4{
+    font-size:1rem;
+}
+h5{
+    font-size:0.9rem;
+}
+h6{
+    font-size:0.7rem;
+}
+
+
+.bg-red, .bgRed{
+    background-color:indianred;
+}
+.bg-blue, .bgBlue{
+    background-color:steelblue;
+}
+.bg-green, .bgGreen{
+    background-color:forestgreen;
+}
+
+
+
+
+.devBorder{
+    border:1px dotted green;
+}
+
+
+
+
+
+// MODAL TRANSITION CLASSES:
+//
+// #vue-component-modal {
+//     .modal {
+//         background: rgba(0,0,0,0.5);
+//         color: white;
+//         padding: 1em;
+//         width: 98%;
+//         height:98%;
+//         margin: auto;
+//
+//         // position: absolute;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//     }
+//
+//     .fade-enter-active,
+//     .fade-leave-active {
+//         transition: opacity 0.2s ease-in-out;
+//     }
+//
+//     .fade-enter,
+//     .fade-leave-to {
+//         opacity: 0;
+//     }
+//
+//     .bk {
+//         transition: all 0.2s ease-in-out;
+//     }
+//
+//     .blur {
+//         filter: blur(2px);
+//         opacity: 0.4;
+//     }
+// }
+//
+//
+//
+
+
+
+
+
+// #vue-component-tabs-v2{
+//     .fade-enter-active,
+//     .fade-leave-active {
+//       -webkit-transition: all .4s ease;
+//       transition: all .4s ease;
+//     }
+//     .fade-enter,
+//     .fade-leave-active {
+//       opacity: 0;
+//     }
+//     .tab-container {
+//       overflow: hidden;
+//     }
+//     .tab-buttons {
+//       list-style: none;
+//       margin: 0 -5px;
+//       padding: 0;
+//       display: -webkit-box;
+//       display: -ms-flexbox;
+//       display: flex;
+//     }
+//     .tab-buttons > li {
+//       padding: 0 5px;
+//       margin: 0 5px;
+//       border: 1px solid rgba(0, 0, 0, 0.2);
+//       cursor: pointer;
+//     }
+//     .tab-buttons > li:hover {
+//       background-color: #eee;
+//     }
+//     .tab-buttons > li.active {
+//       font-weight: bold;
+//     }
+//     .tab-body > * {
+//       padding: 5px;
+//       box-sizing: border-box;
+//     }
+//     .tab-body > .fade-enter-active,
+//     .tab-body > .fade-leave-active {
+//       position: absolute;
+//       width: 100%;
+//     }
+//     .user-info {
+//       background-color: #def;
+//     }
+//     .user-profile {
+//       background-color: #cfd;
+//     }
+//
+// }
