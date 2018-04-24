@@ -25,8 +25,8 @@ new Vue({
     data: {
         apies : [
                 "https://api.coinmarketcap.com/v1/ticker/",
-                "https://api.coinmarketcap.com/v1/ticker/dent",
-                "https://api.coinmarketcap.com/v1/ticker/pillar"
+                "https://api.coinmarketcap.com/v1/ticker/dent/",
+                "https://api.coinmarketcap.com/v1/ticker/pillar/"
         ],
         allCoins: [],
         myHoldings: {
@@ -125,14 +125,64 @@ new Vue({
         }
 
         ,fetchData: function() {
+
             var self = this;
 
+            let status = (r) => {
+                if (r.ok) {
+                    // return Promise.resolve(r)
+                    return r;
+                } else {
+                    // return Promise.reject(new Error(r.statusText))
+                    throw new Error(r.statusText);
+                }
+            }
+
+            let json = (r) => r.json();
+
+            let promises = self.apies.map(url => {
+
+                return fetch(url)
+                    .then(status)
+                    .then(json)
+                    // .then(d => Promise.resolve(d))
+                    // .catch(e => Promise.reject(new Error(e)));
+            });
 
 
 
 
 
 
+
+            Promise.all(promises).then(d => {
+                console.log('nice! now do something.', d);
+
+                self.allCoins = d.reduce((acc, cur) => {
+                    return acc.concat(cur);
+                }, [] );
+
+                // for (var i = 0, x = d.length; i < x; i++) {
+                //     console.log(d[i]);
+                //     self.allCoins.push(d[i]);
+                // }
+                console.log('self.allCoins', self.allCoins);
+
+                self.myWallet = self.buildMyWallet(self.allCoins);
+                self.totalUSD();
+                self.totalBTC();
+                self.buildChart2();
+
+            }).catch(e => {
+                console.log('oops, something has gone wrong.', e);
+            });
+
+
+
+
+
+
+/*
             $.get(self.apies[0], function(response) {
                 console.log(response);
                 self.myWallet = self.buildMyWallet(response);
@@ -141,6 +191,11 @@ new Vue({
                 // self.buildChart1();
                 self.buildChart2();
             });
+ */
+
+
+
+
 
             self.fetchTick++;
 
@@ -157,7 +212,7 @@ new Vue({
             // this.myHoldingsTotalInUSD = (N*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
             this.myHoldingsTotalInUSD = N;
 
-            console.log(this.myHoldingsTotalInUSD);
+            // console.log(this.myHoldingsTotalInUSD);
         },
 
 
@@ -175,7 +230,7 @@ new Vue({
             // console.log( this.myHoldingsTotalInUSD, this.bitcoinPrice );
 
             // console.log( this.myHoldingsTotalInUSD );
-            console.log( this.myHoldingsTotalInBTC );
+            // console.log( this.myHoldingsTotalInBTC );
             // console.log( this.filterCoin("BTC"));
             // console.log( this.filterCoin("BTC")[0].price_usd );
 
@@ -187,7 +242,7 @@ new Vue({
 
         buildMyWallet: function(coins) {
             // window.console.log('buildmyWallet()', this.myHoldings);
-            this.allCoins = coins;
+            // this.allCoins = coins;
 
             return coins.filter( coin => {
                 // return Object.keys(this.myHoldings).indexOf(coin.id) >= 0;
