@@ -5,41 +5,55 @@ var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
 
 
+
+/*
+const vues = document.querySelectorAll(".wallet");
+const eachVue = Array.prototype.forEach;
+eachVue.call(vues, (el, index) => {
+    new Vue({
+ */
+
+
+
+
 new Vue({
 
     el: '#wallet',
+    // el,
     delimiters: ['${', '}'],
 
     data: {
         apies : [
                 "https://api.coinmarketcap.com/v1/ticker/",
+                "https://api.coinmarketcap.com/v1/ticker/dent",
+                "https://api.coinmarketcap.com/v1/ticker/pillar"
         ],
         allCoins: [],
         myHoldings: {
             // "BCH": 1,
             // "BTC": 2,
-            "LTC": 50,
-            "ETH": 1,
-            "PPT": 20,
-            "ADA": 500,
-            "OMG": 30,
-            "EOS": 130,
-            "RDD": 1800,
-            "SALT": 0,
-            "VERI": 2,
-            "PLR": 350
+            // "LTC": 1,
+            // "ETH": 1,
+            // "PPT": 20,
+            // "ADA": 500,
+            // "OMG": 30,
+            // "EOS": 130,
+            // "RDD": 1800,
+            // "SALT": 0,
+            // "VERI": 2,
+            // "PLR": 350
         },
         myWallet: [],
         myHoldingsTotalInUSD: 0,
         myHoldingsTotalInBTC: 0,
-        fetchTick:0,
-        bitcoinPrice:0,
+        fetchTick: 0,
+        bitcoinPrice: 0,
 
-        favorites:[
-             {name:'Litecoin',  symbol: 'LTC', icon:'link/to/graphic', color:'red'}
-            ,{name:'Ethereum',  symbol: 'ETH', icon:'link/to/graphic', color:'green'}
-            ,{name:'EOS.io',    symbol: 'EOS', icon:'link/to/graphic', color:'blue'}
-        ]
+        // favorites:[
+        //      {name:'Litecoin',  symbol: 'LTC', icon:'link/to/graphic', color:'red'}
+        //     ,{name:'Ethereum',  symbol: 'ETH', icon:'link/to/graphic', color:'green'}
+        //     ,{name:'EOS.io',    symbol: 'EOS', icon:'link/to/graphic', color:'blue'}
+        // ]
 
     },
 
@@ -49,14 +63,19 @@ new Vue({
 
     mounted: function() {
 
+        var x = this.$el.getAttribute('data-holdings');
+        this.myHoldings = JSON.parse(x);
+
+        console.log(this.myHoldings);
+
         this.fetchData();
 
-        //
         setInterval(function () {
             this.fetchData();
-        }.bind(this), 100000);
+        }.bind(this), 60*1000);
 
     },
+
 
 
 
@@ -108,8 +127,14 @@ new Vue({
         ,fetchData: function() {
             var self = this;
 
+
+
+
+
+
+
             $.get(self.apies[0], function(response) {
-                // console.log(response);
+                console.log(response);
                 self.myWallet = self.buildMyWallet(response);
                 self.totalUSD();
                 self.totalBTC();
@@ -122,37 +147,42 @@ new Vue({
         },
 
 
+
         totalUSD: function(){
 
-            let n = 0;
-            console.log('1', this.myWallet);
-            this.myWallet.reduce( (total, c) => {
-                // console.log(c.holding_value);
-                n += c.holding_value;
-                // return total = c.holding_value
-            })
+            var N = this.myWallet.reduce( (total, c) => {
+                return total + c.holding_value;
+            }, 0)
 
-            // console.log('$ ', n);
+            // this.myHoldingsTotalInUSD = (N*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            this.myHoldingsTotalInUSD = N;
 
-            // this.myHoldingsTotalInUSD = (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-            this.myHoldingsTotalInUSD = n;
-
-            // console.log('$ ', this.myHoldingsTotalInUSD);
+            console.log(this.myHoldingsTotalInUSD);
         },
+
+
 
         totalBTC: function(){
-// this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
+            // console.log('totalBTC()');
+            this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
 
             let n = Number(this.myHoldingsTotalInUSD) / Number(this.bitcoinPrice) ;
+            // let n = this.myHoldingsTotalInUSD / this.bitcoinPrice ;
 
+            // this.myHoldingsTotalInBTC = n;
             this.myHoldingsTotalInBTC = n.toFixed(6);
 
+            // console.log( this.myHoldingsTotalInUSD, this.bitcoinPrice );
 
             // console.log( this.myHoldingsTotalInUSD );
-            // console.log( this.myHoldingsTotalInBTC );
+            console.log( this.myHoldingsTotalInBTC );
             // console.log( this.filterCoin("BTC"));
             // console.log( this.filterCoin("BTC")[0].price_usd );
+
         },
+
+
+
 
 
         buildMyWallet: function(coins) {
@@ -177,18 +207,18 @@ new Vue({
 
 
 
-        // filterCoin: function(x){
-        //     var arr = this.allCoins.slice();
-        //       return arr.filter(function(coin) {
-        //
-        //           // return coin.id.indexOf(x) > -1;
-        //           if(coin.symbol === x){
-        //
-        //               return coin.symbol.indexOf(x) > -1;
-        //           }
-        //
-        //       })
-        // },
+        filterCoin: function(x){
+            var arr = this.allCoins.slice();
+              return arr.filter(function(coin) {
+
+                  // return coin.id.indexOf(x) > -1;
+                  if(coin.symbol === x){
+
+                      return coin.symbol.indexOf(x) > -1;
+                  }
+
+              })
+        },
 
 
 
@@ -202,12 +232,11 @@ new Vue({
 
             chartData = chartData.concat( this.myWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
 
-            console.log('chartData', chartData);
-
+            // console.log('chartData', chartData);
 
 
             var chart = bb.generate({
-                bindto: "#chart2",
+                bindto: "#chart",
                 donut: {
                     title: "$ " + String(this.formatAsUSD(this.myHoldingsTotalInUSD))
                 },
@@ -309,4 +338,10 @@ new Vue({
     }
 
 
+})
+
+
+
+/*
 });
+ */

@@ -46,66 +46,55 @@
 <!-- <main id="viewport" class="container pa2"> -->
 <main>
 <br><br><br>
-    <div id="wallet">
 
-        <button type="button" name="button" v-on:click="fetchData">Refresh <small>(${fetchTick})</small></button>
+    <div id="wallet" class="wallet" data-holdings='{
+                                                    "LTC": 50,
+                                                    "ETH": 1,
+                                                    "PPT": 20,
+                                                    "ADA": 500,
+                                                    "OMG": 30,
+                                                    "EOS": 130,
+                                                    "RDD": 1800,
+                                                    "VERI": 2,
+                                                    "DENT": 800,
+                                                    "PLR": 350
+                                                    }' >
 
-
-
-<!--
-        <table class="w-100 mw6 center">
-            <tr v-for="coin in myWallet" class="tr">
-                <td>${coin.holding }</td>
-                <td class="tl">${coin.symbol}</td>
-                <td>@</td>
-                <td><strong>${coin.price_usd }</strong></td>
-                <td>=</td>
-                <td>${coin.holding_value | formatUSD} </td>
-                <td class="pl4 f7 " v-bind:class="{ red: coin.percent_change_7d<0, blue: coin.percent_change_7d>0 }" >${coin.percent_change_7d }%</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="tr pt3"><strong>$${calculateHoldings | formatUSD}</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-
-        <hr>
-
- -->
+        <!-- <button type="button" name="button" v-on:click="fetchData">Refresh <small>(${fetchTick})</small></button> -->
 
 
 
-<!-- <div id="chart1" style="width: 100%; height:300px; "></div> -->
-<div id="chart2" style="width: 100%; height:300px; "></div>
+<!-- <div id="chart1" style="width: 100%; height:300px;"></div> -->
+<div id="chart" style="width: 100%; height:300px;"></div>
 
 
 
-<div class="tc pt3"><strong>$${calculateHoldings | formatUSD}</strong></div>
+
+<!-- <div class="tc pt3"><strong>$${calculateHoldings | formatUSD}</strong></div> -->
 <div class="tc pt3"><strong>$${myHoldingsTotalInUSD | formatUSD} USD</strong></div>
 <div class="tc pt3"><strong>${myHoldingsTotalInBTC} BTC</strong></div>
 
+
+
+
+
         <div class="flex flex-wrap justify-center">
 
-                <div v-for="coin in myWallet" class="ma3">
-                    <div class="">${coin.holding }</div>
+            <div v-for="coin in myWallet" class="ma3">
+                <div class="">${coin.holding }</div>
+                <i class="cc " v-bind:class="coinClass(coin.symbol)"></i>
+                <div class="fw7">${coin.symbol}</div>
+                <div class="f7">${coin.name}</div>
+                <div class="f7 dark-pink">${coin.price_usd}</div>
+                <div class="">$${coin.holding_value | formatUSD}</div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" > ${coin.percent_change_1h }% </div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" > ${coin.percent_change_24h }% </div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > ${coin.percent_change_7d }% </div>
+            </div>
 
-                    <i class="cc " v-bind:class="coinClass(coin.symbol)"></i>
-
-                    <div class="fw7">${coin.symbol}</div>
-                    <div class="f7">${coin.name}</div>
-                    <div class="f7 dark-pink">${coin.price_usd}</div>
-                    <div class="">$${coin.holding_value | formatUSD}</div>
-                    <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" > ${coin.percent_change_1h }% </div>
-                    <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" > ${coin.percent_change_24h }% </div>
-                    <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > ${coin.percent_change_7d }% </div>
-                </div>
         </div>
+
+
 
 
 
