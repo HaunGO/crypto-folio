@@ -40,5 +40,22 @@ h6 {
 .bg-green, .bgGreen {
   background-color: forestgreen; }
 
-.devBorder {
-  border: 1px dotted green; }
+.chart_wrapper #legend {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .chart_wrapper #legend > span {
+    padding: 0.5em;
+    margin: 0.1em;
+    cursor: pointer; }
+
+.bb {
+  border: 0; }
+
+.bb-chart-arc path {
+  stroke: transparent; }

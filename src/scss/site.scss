@@ -61,11 +61,27 @@ h6{
 
 
 
+.chart_wrapper #legend{
+    // border:1px solid gold;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    flex-wrap:wrap;
 
-.devBorder{
-    border:1px dotted green;
+    >span{
+        padding:0.5em;
+        margin:0.1em;
+        cursor:pointer;
+    }
+
 }
 
+.bb{
+    border:0;
+}
+.bb-chart-arc path{
+    stroke:transparent;
+}
 
 
 
