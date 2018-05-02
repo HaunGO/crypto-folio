@@ -153,6 +153,8 @@ new Vue({
                 self.totalBTC();
                 self.buildChart2();
 
+                console.log('myWallet', self.myWallet);
+
             }).catch(e => {
                 console.log('oops, something has gone wrong.', e);
             });
@@ -270,13 +272,22 @@ new Vue({
                 return Object.keys(this.myHoldings).indexOf(coin.symbol) >= 0;
             }).map( c => {
                 return Object.assign({}, c, {
-                    // holding: this.myHoldings[c.id],
-                    // holding_value:  c.price_usd * this.myHoldings[c.id]
                     holding: this.myHoldings[c.symbol]
-                    ,holding_value:  c.price_usd * this.myHoldings[c.symbol]
-
+                    ,holding_value:  c.price_usd * (this.myHoldings[c.symbol] )
                 });
-            });
+            }).sort( (a, b) => {
+                return a.holding_value - b.holding_value;
+/*
+                let comparison = 0;
+                if (a.holding_value < b.holding_value) {
+                    comparison = 1;
+                } else if (b.holding_value < a.holding_value) {
+                    comparison = -1;
+                }
+                return comparison;
+ */
+            }).reverse();
+
         },
 
 
@@ -313,7 +324,6 @@ new Vue({
 
             // console.log('chartData', chartData);
 
-
              var chart = bb.generate({
                 bindto: "#chart",
                 donut: {
@@ -326,67 +336,45 @@ new Vue({
                 legend:{
                     show:true,
                     contents: {
-                      bindto: "#legend",
-                      template: "<span style='color:#fff;padding:10px;background-color:{=COLOR}'>{=TITLE}</span>"
+                        bindto: "#legend",
+                        template: "<div style='color:#fff;padding:10px;background-color:{=COLOR}'>{=TITLE}</div>",
+                    },
+                    item: {
+                        // onover: function(id) {
+                        //     console.log(id);
+                        //         d3.select(".bb-chart-arc.bb-target-"+ id +" text")
+                        //         .style("fill-opacity", 1);
+                        // },
+                        // onout: function(id) {
+                        //     console.log(id);
+                        //         d3.select(".bb-chart-arc.bb-target-"+ id +" text")
+                        //         .style("fill-opacity", 0);
+                        // },
+                        onclick: function(id){
+                            // THIS IS IN PLACE TO NULLIFY THE DEFAULT BEHAVIOR
+                            // console.log(id);
+                        }
                     }
                 },
-                // pie: {
-                //     innerRadius: 20
-                // },
                 data: {
                     type: "donut",
                     columns: chartData,
                     colors: {
-                        // "Bitcoin": "gold",
-                        // "Litecoin": "silver",
-                        // "Ethereum": "gray",
-                        // "OmiseGO": "navy",
-                        // "EOS": "purple"
+                        "Bitcoin": "#f9a021",
+                        "Litecoin": "#b6b6b6",
+                        "Ethereum": "#999999",
+                        "OmiseGO": "#3979ff",
+                        "EOS": "#9aa3ee",
+                        "Populous": '#cfb949',
+                        "ReddCoin": "#f01416",
+                        "Veritaseum": "#ff991d",
+                        "Pillar": "#00beff",
+                        "Dent": "#af0000",
+                        "Cardano": "#33c8c9"
                     }
 
                 }
             });
-
-
-
-        //     function toggle(id) {
-        //         chart.toggle(id);
-        //     }
-        //
-        //     d3.select('.chart_wrapper')
-        //         // .insert('div', '.chart')
-        //         // .attr('class', 'legend')
-        //         // .selectAll('span')
-        //         // .data( this.myWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name] ) )
-        //         // .enter()
-        //         // .append('span')
-        //         .attr('data-id', function(id) {
-        //             return id;
-        //         })
-        //         .html(function(id) {
-        //             return id;
-        //         })
-        //         .each(function(id) {
-        //             d3.select(this)
-        //                 .style('background-color', chart.color(id))
-        //         })
-        //         .on('mouseover', function(id) {
-        //             chart.focus(id);
-        //         })
-        //         .on('mouseout', function(id) {
-        //             chart.revert();
-        //         })
-        //         .on('click', function(id) {
-        //             // chart.toggle(id);
-        //         });
-
-
-
-
-
-
-
-
 
 
 
@@ -403,56 +391,3 @@ new Vue({
 /*
 });
  */
-
-
-
-
-
-
-    var chart5 = bb.generate({
-        data: {
-            columns: [
-                ["data1", 100],
-                ["data2", 300],
-                ["data3", 200]
-            ],
-            type: "donut"
-        },
-        legend: {
-            show: false
-        },
-        bindto: "#custom"
-    });
-
-    function toggle(id) {
-        chart5.toggle(id);
-    }
-
-    d3.select('.chart_area')
-        .insert('div', '.chartkey')
-        .attr('class', 'legend')
-        .selectAll('span')
-        .data(['data1', 'data2', 'data3'])
-        .enter()
-        .append('span')
-        .attr('data-id', function(id) {
-            return id;
-        })
-        .html(function(id) {
-            return id;
-        })
-        .each(function(id) {
-            d3.select(this)
-                .style('background-color', chart5.color(id))
-                // .style('color', 'red')
-                .style('padding', '5px')
-        })
-        .on('mouseover', function(id) {
-            chart5.focus(id);
-        })
-        .on('mouseout', function(id) {
-            chart5.revert();
-        })
-        .on('click', function(id) {
-            chart5.toggle(id);
-        });
