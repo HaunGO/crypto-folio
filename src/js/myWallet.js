@@ -6,20 +6,22 @@ var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
 
 
-/*
+
 const vues = document.querySelectorAll(".wallet");
+
 const eachVue = Array.prototype.forEach;
+
 eachVue.call(vues, (el, index) => {
     new Vue({
- */
 
 
 
 
-new Vue({
 
-    el: '#wallet',
-    // el,
+// new Vue({
+
+    // el: '#wallet',
+    el,
     delimiters: ['${', '}'],
 
     data: {
@@ -103,6 +105,7 @@ new Vue({
 
 
 
+
     methods: {
         formatAsUSD: function(n) {
             return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
@@ -154,7 +157,7 @@ new Vue({
                 self.totalBTC();
                 self.buildChart2();
 
-                console.log('myWallet', self.myWallet);
+                // console.log('myWallet', self.myWallet);
 
 
                 document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
@@ -188,7 +191,6 @@ new Vue({
                     // console.log( self.wordifyNumber(419) );
                     // console.log( self.wordifyNumber(41) );
                     // console.log( self.wordifyNumber(4) );
-
                 });
 
 
@@ -321,15 +323,20 @@ new Vue({
     https://naver.github.io/billboard.js/
  */
         buildChart2: function(){
+            // console.log('this.el', this.$el);
+            // console.log('``` ', this.$el.querySelectorAll(".wallet") );
+
+            var thisWallet = this.$el;
+            var thisChart = thisWallet.querySelectorAll(".chart")[0];
+            var thisLegend = thisWallet.querySelectorAll(".legend")[0];
 
             var chartData = [];
-
             chartData = chartData.concat( this.myWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
-
             // console.log('chartData', chartData);
 
-             var chart = bb.generate({
-                bindto: "#chart",
+            var chart = bb.generate({
+                // bindto: "#chart",
+                bindto: thisChart,
                 donut: {
                     title: "$ " + String(this.formatAsUSD(this.myHoldingsTotalInUSD))+'\n \n'+String(this.myHoldingsTotalInBTC)+' BTC',
                     padAngle: 0.01,
@@ -340,8 +347,8 @@ new Vue({
                 legend:{
                     show:true,
                     contents: {
-                        bindto: "#legend",
-                        template: "<div style='color:#fff;padding:10px;background-color:{=COLOR}'>{=TITLE}</div>",
+                        bindto: thisLegend,
+                        template: '<div style="color:#fff; padding:10px 15px; background-color:{=COLOR}">{=TITLE}</div>',
                     },
                     item: {
                         // onover: function(id) {
@@ -364,19 +371,18 @@ new Vue({
                     type: "donut",
                     columns: chartData,
                     colors: {
-                        "Bitcoin": "#f9a021",
-                        "Litecoin": "#b6b6b6",
-                        "Ethereum": "#999999",
-                        "OmiseGO": "#3979ff",
-                        "EOS": "#9aa3ee",
-                        "Populous": '#cfb949',
-                        "ReddCoin": "#f01416",
-                        "Veritaseum": "#ff991d",
-                        "Pillar": "#00beff",
-                        "Dent": "#af0000",
-                        "Cardano": "#33c8c9"
+                        "Bitcoin" : "#f9a021",
+                        "Litecoin" : "#b6b6b6",
+                        "Ethereum" : "#999999",
+                        "OmiseGO" : "#3979ff",
+                        "EOS" : "#9aa3ee",
+                        "Populous" : '#cfb949',
+                        "ReddCoin" : "#f01416",
+                        "Veritaseum" : "#ff991d",
+                        "Pillar" : "#00beff",
+                        "Dent" : "#af0000",
+                        "Cardano" : "#33c8c9"
                     }
-
                 }
             });
 
@@ -384,14 +390,11 @@ new Vue({
 
         }
 
-
     }
-
 
 })
 
 
 
-/*
+
 });
- */

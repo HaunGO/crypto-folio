@@ -56,7 +56,43 @@
 
 
 
-    <div id="wallet" class="wallet" data-holdings='{
+<div id="" class="wallet" data-holdings='{  "LTC": 1,
+                                            "ETH": 1,
+                                            "PPT": 35,
+                                            "THETA": 1000,
+                                            "DGB": 400
+                                            }'>
+
+    <div class="chart_wrapper">
+        <div class="chart" style="width: 100%; height:300px;"></div>
+        <div class="legend"></div>
+    </div>
+
+    <div class="flex flex-wrap justify-center">
+        <div v-for="coin in myWallet" class="ma3">
+            <div class="">${coin.holding }</div>
+            <div class="fw7">${coin.symbol}</div>
+            <div class="f7">${coin.price_usd}</div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="" class="wallet" data-holdings='{
                                                     "LTC": 50,
                                                     "ETH": 1,
                                                     "PPT": 35,
@@ -75,20 +111,20 @@
                                                     }'>
 
 
-<button type="button" name="button" v-on:click="fetchData">Refresh <small>(${fetchTick})</small></button>
+    <button type="button" name="button" v-on:click="fetchData">Refresh <small>(${fetchTick})</small></button>
 
 
-<div class="chart_wrapper">
+    <div class="chart_wrapper">
 
-    <div id="chart" style="width: 100%; height:300px;"></div>
-    <div id="legend"></div>
+        <div class="chart" style="width: 100%; height:300px;"></div>
+        <div class="legend"></div>
 
-</div>
+    </div>
 
 
-<!-- <div class="tc pt3"><strong>$${calculateHoldings | formatUSD}</strong></div> -->
-<div class="tc pt3"><strong>$${myHoldingsTotalInUSD | formatUSD} USD</strong></div>
-<div class="tc pt3"><strong>${myHoldingsTotalInBTC} BTC</strong></div>
+    <!-- <div class="tc pt3"><strong>$${calculateHoldings | formatUSD}</strong></div> -->
+    <div class="tc pt3"><strong>$${myHoldingsTotalInUSD | formatUSD} USD</strong></div>
+    <div class="tc pt3"><strong>${myHoldingsTotalInBTC} BTC</strong></div>
 
 
 
@@ -116,6 +152,8 @@
     <div class="tc pt3">MarketCap: $${globalMarketCap}</div>
     <div class="tc pt1">24/hr Volume: ${total24HrVolume}</div>
     <div class="tc pt1">Bitcoin Dominance: ${bitcoinDominance}</div>
+
+
 
 
 
@@ -452,7 +490,7 @@
 
 
 
-    </div>
+</div>
 
 
 

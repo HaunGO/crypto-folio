@@ -39,7 +39,7 @@ h6 {
 .bg-green, .bgGreen {
   background-color: forestgreen; }
 
-.chart_wrapper #legend {
+.chart_wrapper .legend {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
@@ -48,7 +48,7 @@ h6 {
       justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
-  .chart_wrapper #legend > span {
+  .chart_wrapper .legend > span {
     padding: 0.5em;
     margin: 0.1em;
     cursor: pointer; }
