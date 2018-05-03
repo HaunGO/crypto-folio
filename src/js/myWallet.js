@@ -27,6 +27,7 @@ new Vue({
                 "https://api.coinmarketcap.com/v1/ticker/",
                 "https://api.coinmarketcap.com/v1/ticker/dent/",
                 "https://api.coinmarketcap.com/v1/ticker/pillar/",
+                "https://api.coinmarketcap.com/v1/ticker/theta-token/",
         ],
         globalMarket : "https://api.coinmarketcap.com/v1/global/",
         globalMarketCap: 0,
@@ -154,6 +155,9 @@ new Vue({
                 self.buildChart2();
 
                 console.log('myWallet', self.myWallet);
+
+
+                document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
 
             }).catch(e => {
                 console.log('oops, something has gone wrong.', e);
