@@ -1,6 +1,13 @@
+*, *:before, *:after {
+  box-sizing: border-box; }
+
+html {
+  overflow-x: hidden; }
+
 html,
 body {
-  font-family: monospace; }
+  font-family: monospace;
+  width: 100%; }
 
 .vueBlock {
   border: 1px solid gray;
@@ -39,22 +46,41 @@ h6 {
 .bg-green, .bgGreen {
   background-color: forestgreen; }
 
-.chart_wrapper .legend {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
-  .chart_wrapper .legend > span {
-    padding: 0.5em;
-    margin: 0.1em;
-    cursor: pointer; }
+.chart_wrapper {
+  position: relative;
+  margin: 0;
+  padding: 0; }
+  .chart_wrapper .centerTitle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-align: center; }
+  .chart_wrapper .dot {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    background: rgba(173, 216, 230, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; }
 
 .bb {
   border: 0; }
 
 .bb-chart-arc path {
   stroke: transparent; }
+
+.myLegend_coin {
+  padding: 0.5em;
+  width: 100px;
+  text-align: center; }

@@ -3,12 +3,24 @@
 
 @import "globals/vars.scss";
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html{
+    overflow-x: hidden;
+}
 
 html,
 body{
     // background-color:$colorBodyBg;
     font-family:monospace;
+    width:100%;
 }
+
+// overflow-x: hidden;
+
+
 
 .vueBlock{
     border:1px solid gray;
@@ -59,32 +71,78 @@ h6{
     background-color:forestgreen;
 }
 
+.wallet{
+    // border:1px dashed gold;
+}
 
+.chart_wrapper {
+    position: relative;
+    margin:0; padding:0;
 
-.chart_wrapper .legend{
-    // border:1px solid gold;
-    display:flex;
-    flex-direction:row;
-    justify-content: center;
-    flex-wrap:wrap;
+    // .legend{
+    //     >span{
+    //         padding:0.5em;
+    //         margin:0.1em;
+    //         cursor:pointer;
+    //     }
+    // }
 
-    >span{
-        padding:0.5em;
-        margin:0.1em;
+    .centerTitle{
+        // border:1px solid red;
+        position:absolute;
+        top:50%; left:50%;
+        // transform: translate(-53%, -48%);
+        transform: translate(-50%, -50%);
+        z-index:999;
         cursor:pointer;
+
+        margin:0; padding:0;
+
+        text-align: center;
+
     }
+
+    .dot{
+        display:flex;
+        justify-content: center;
+        flex-direction: column;
+        align-content: center;
+        background:rgba(lightblue, 0.1);
+        // width:118px;
+        // height:118px;
+        width:50px;
+        height:50px;
+        border-radius:50%;
+    }
+
 
 }
 
 .bb{
     border:0;
 }
+
 .bb-chart-arc path{
     stroke:transparent;
 }
 
 
+.myLegend{
+    // width:100%;
+    // padding:1em; margin:0;
+    // display:flex;
+    // justify-content: center;
+    // flex-wrap:wrap;
+    // border:1px solid red;
+}
 
+.myLegend_coin{
+    // border:1px dotted green;
+    padding:0.5em;
+    width:100px;
+    text-align: center;
+    // flex:1 1 15%;
+}
 
 // MODAL TRANSITION CLASSES:
 //
