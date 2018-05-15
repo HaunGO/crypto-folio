@@ -13,7 +13,8 @@
 			"dist/assets/css/site.css" : "src/scss/site.scss"
 		},
 		"twig": {
-		    "dist/index.html": "src/index.html.twig"
+		    "dist/index.html": "src/index.html.twig",
+		    "dist/a.html": "src/a.html.twig"
 		},
 		"browserSync": {
 			"server": "dist/"

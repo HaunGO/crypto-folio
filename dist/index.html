@@ -51,57 +51,19 @@
 
 
 
-
-
-<!--
-<div id="" class="wallet" data-holdings='{  "LTC": 1,
-                                            "RDD": 8000,
-                                            "DENT": 800,
-                                            "DGB": 400
-                                        }'>
-
-    <div class="chart" style="width: 100%; height:300px;"></div>
-
-    <div class="flex flex-wrap justify-center">
-        <div v-for="coin in myWallet" class="ma3">
-            <div class="">${coin.holding }</div>
-            <div class="fw7">${coin.symbol}</div>
-            <div class="f7">${coin.price_usd}</div>
-        </div>
-    </div>
-
-    <div class="chart_wrapper">
-        <div class="legend"></div>
-    </div>
-
-    <div class="flex flex-wrap justify-center">
-        <div v-for="coin in myWallet" class="ma3">
-            <div class="">${coin.holding }</div>
-            <div class="fw7">${coin.symbol}</div>
-            <div class="f7">${coin.price_usd}</div>
-        </div>
-    </div>
-</div>
- -->
-
-
-
-
-
-
 <div id="" class="wallet" data-holdings='{
-                                            "LTC": 50
+                                            "LTC": 1
                                             ,"ETH": 1
-                                            ,"PPT": 0.5
-                                            ,"ADA": 500
-                                            ,"OMG": 0.5
-                                            ,"EOS": 130
-                                            ,"VERI": 2
-                                            ,"PLR": 350
-                                            ,"RDD": 8000
-                                            ,"DENT": 800
-                                            ,"DGB": 15000
-                                            ,"THETA": 3400
+                                            ,"PPT": 1
+                                            ,"ADA": 1
+                                            ,"OMG": 1
+                                            ,"EOS": 1
+                                            ,"VERI": 1
+                                            ,"PLR": 1
+                                            ,"RDD": 1
+                                            ,"DENT": 1
+                                            ,"DGB": 1
+                                            ,"THETA": 1
                                         }'
                                     data-watchings='{
                                                     "BTC":1
@@ -115,9 +77,6 @@
 </div>
 
 
-<!-- <button type="button" name="button" v-on:click='descrete = !descrete'>Toggle Descrete</button> -->
-<!-- <button type="button" name="button" v-on:click="fetchData">Refresh <small>(${fetchTick})</small></button> -->
-
 
     <div class="chart_wrapper">
         <div class="centerTitle" v-on:click='descrete = !descrete'>
@@ -130,14 +89,6 @@
         <div class="chart" style="width: 100%; height:300px;"></div>
         <!-- <div class="legend"></div> -->
     </div>
-
-
-    <!--
-    <div class="" v-if="!descrete">
-        <div class="tc pt3"><strong>$${myHoldingsTotalInUSD | formatUSD} USD</strong></div>
-        <div class="tc pt3"><strong>${myHoldingsTotalInBTC} BTC</strong></div>
-    </div>
-    -->
 
 
         <div class="myLegend flex flex-wrap justify-center">
@@ -156,21 +107,6 @@
 
         </div>
 
-
-
-
-
-
-<!--
-            <table>
-                <tr v-for="coin in allCoins">
-                    <td>${coin.symbol}</td>
-                    <td>${coin.name}</td>
-                    <td>${coin.price_usd}</td>
-                    <td>${coin.percent_change_24h}</td>
-              </tr>
-            </table>
- -->
 
 
 
@@ -199,17 +135,6 @@
 
 </main>
 
-
-
-
-
-<!--
-    <div class="chart_area">
-
-        <div id="custom" style="width: 100%; height:300px;"></div>
-
-    </div>
- -->
 
 
 
