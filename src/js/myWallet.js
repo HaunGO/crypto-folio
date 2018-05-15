@@ -37,20 +37,7 @@ eachVue.call(vues, (el, index) => {
         total24HrVolume: 0,
         allCoins: [],
         // THIS HAS BEEN EXTRACTED TO PULL FROM A DATA ATTRIBUTE <data-holdings='{}'>
-        myHoldings: {
-            // "BCH": 1,
-            // "BTC": 2,
-            // "LTC": 1,
-            // "ETH": 1,
-            // "PPT": 20,
-            // "ADA": 500,
-            // "OMG": 30,
-            // "EOS": 130,
-            // "RDD": 1800,
-            // "SALT": 0,
-            // "VERI": 2,
-            // "PLR": 350
-        },
+        myHoldings: {},
         myWallet: [],
         myHoldingsTotalInUSD: 0,
         myHoldingsTotalInBTC: 0,
@@ -336,9 +323,9 @@ eachVue.call(vues, (el, index) => {
             // console.log('chartData', chartData);
 
             var chartTitle = "";
-            if (!this.descrete){
-                chartTitle = "$ " + String(this.formatAsUSD(this.myHoldingsTotalInUSD))+'\n \n'+String(this.myHoldingsTotalInBTC)+' BTC';
-            }
+            // if (!this.descrete){
+                // chartTitle = "$ " + String(this.formatAsUSD(this.myHoldingsTotalInUSD))+'\n \n'+String(this.myHoldingsTotalInBTC)+' BTC';
+            // }
 
             var chart = bb.generate({
                 // bindto: "#chart",
@@ -357,7 +344,7 @@ eachVue.call(vues, (el, index) => {
                         // bindto: thisLegend,
                         // template: '<div style="color:#fff; padding:10px 15px; background-color:{=COLOR}">{=TITLE}</div>',
                     // },
-                    item: {
+                    // item: {
                         // onover: function(id) {
                         //     console.log(id);
                         //         d3.select(".bb-chart-arc.bb-target-"+ id +" text")
@@ -368,27 +355,27 @@ eachVue.call(vues, (el, index) => {
                         //         d3.select(".bb-chart-arc.bb-target-"+ id +" text")
                         //         .style("fill-opacity", 0);
                         // },
-                        onclick: function(id){
+                        // onclick: function(id){
                             // THIS IS IN PLACE TO NULLIFY THE DEFAULT BEHAVIOR
                             // console.log(id);
-                        }
-                    }
+                        // }
+                    // }
                 },
                 data: {
                     type: "donut",
                     columns: chartData,
-                    // labels: true,
-                    labels: {
+                    labels: false,
+                    // labels: {
                         // format: function(v, id, i, j) {
                             // console.log('labels format something 1');
                             // console.log(v, id, i, j);
                         // },
                         // position does not seem to work:
-                        position: {
-                            x: 0,
-                            y: 0
-                        }
-                    },
+                        // position: {
+                            // x: 0,
+                            // y: 0
+                        // }
+                    // },
                     colors: {
                         "Bitcoin" : "#f9a021",
                         "Litecoin" : "#b6b6b6",
