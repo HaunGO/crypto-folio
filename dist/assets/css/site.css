@@ -46,6 +46,10 @@ h6 {
 .bg-green, .bgGreen {
   background-color: forestgreen; }
 
+.wallet {
+  border: 1px dashed gold;
+  margin: 1em; }
+
 .chart_wrapper {
   position: relative;
   margin: 0;

@@ -7,44 +7,62 @@ var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
 
 
-const vues = document.querySelectorAll(".wallet");
+// const vues = document.querySelectorAll(".wallet");
 
-const eachVue = Array.prototype.forEach;
+// const eachVue = Array.prototype.forEach;
 
-eachVue.call(vues, (el, index) => {
-    new Vue({
-
-
+// eachVue.call(vues, (el, index) => {
+    // new Vue({
 
 
 
-// new Vue({
 
-    // el: '#wallet',
-    el,
+
+new Vue({
+
+    el: '#masterDashboard',
+    // el,
     delimiters: ['${', '}'],
+
 
     data: {
         apies : [
-                "https://api.coinmarketcap.com/v1/ticker/",
-                "https://api.coinmarketcap.com/v1/ticker/dent/",
-                "https://api.coinmarketcap.com/v1/ticker/pillar/",
-                "https://api.coinmarketcap.com/v1/ticker/theta-token/",
+            "https://api.coinmarketcap.com/v1/ticker/",
+            "https://api.coinmarketcap.com/v1/ticker/dent/",
+            "https://api.coinmarketcap.com/v1/ticker/pillar/",
+            "https://api.coinmarketcap.com/v1/ticker/theta-token/"
         ],
-        globalMarket : "https://api.coinmarketcap.com/v1/global/",
+
+        globalMarket: "https://api.coinmarketcap.com/v1/global/",
         globalMarketCap: 0,
         bitcoinDominance: 0,
         total24HrVolume: 0,
+
         allCoins: [],
+
         // THIS HAS BEEN EXTRACTED TO PULL FROM A DATA ATTRIBUTE <data-holdings='{}'>
-        myHoldings: {},
+        // myHoldings: {},
+        myMasterHoldings: {},
+
         myWallet: [],
+        myMasterWallet: [],
+
+        myWallets: [],
+
         myHoldingsTotalInUSD: 0,
         myHoldingsTotalInBTC: 0,
+
         fetchTick: 0,
         bitcoinPrice: 0,
 
-        descrete:true
+
+
+
+
+
+
+
+        descrete: true
     },
 
 
@@ -53,36 +71,33 @@ eachVue.call(vues, (el, index) => {
 
     mounted: function() {
 
-        var x = this.$el.getAttribute('data-holdings');
-        this.myHoldings = JSON.parse(x);
 
-        console.log(this.myHoldings);
+        // Array.from(this.$el.getElementsByClassName("wallet")).forEach((w) => {
+        //     this.prepWallet(w);
+        // });
+
+        // this.buildMyWallet();
+
+        // var x = this.$el.getAttribute('data-holdings');
+        // this.myHoldings = JSON.parse(x);
+        //
+        // console.log(this.myHoldings);
 
         this.fetchData();
 
-        setInterval(function () {
-            this.fetchData();
-        }.bind(this), 60*1000);
+        // setInterval(function () {
+        //     this.fetchData();
+        // }.bind(this), 60*10000);
 
     },
 
-
-
-
-
-
-
     computed: {
-        calculateHoldings: function(){
+        calculateHoldings: function(w){
             return this.myWallet.reduce( (total, c) => {
                 return total + c.holding_value;
             }, 0)
         }
     },
-
-
-
-
 
     filters:{
         formatUSD: function(n) {
@@ -90,11 +105,107 @@ eachVue.call(vues, (el, index) => {
         }
     },
 
-
-
-
-
     methods: {
+
+        doneLoadingAllCoins: function(){
+            console.log('doneLoadingAllCoins()');
+            /* THIS SHOULD BE RECODED TO WORK WITH MULTIPLE WALLETS */
+            // this.myWallet = this.buildMyWallet(this.allCoins);
+            // this.totalUSD();
+            // this.totalBTC();
+            // this.buildChart2();
+
+            Array.from(this.$el.getElementsByClassName("wallet")).forEach((w) => {
+                this.prepWallet(w);
+            });
+
+            // this.myWallets = Array.from(this.myWallets);
+            // this.myWallets.forEach(w => this.buildMyWallet(w) );
+            // console.log(this.myWallets);
+        },
+
+        prepWallet:function(_w_){
+            // console.log('prepWallet', _w_);
+
+            var holdings = _w_.getAttribute('data-holdings');
+            // this.myHoldings = JSON.parse(x);
+
+            // this.myMasterHoldings = Object.assign({}, JSON.parse(x));
+            // console.log('myMasterHoldings', this.myMasterHoldings);
+
+
+//            let h = JSON.parse(holdings);
+
+//            console.log('holdings', holdings);
+//            console.log('h', h);
+
+            // let w = { 'div':_w_, 'holding': this.buildMyWallet(h), 'holding_value':0 }
+            // let w = { 'div':_w_ }
+            // let w = this.buildMyWallet(w);
+
+
+            // console.log(Array.from(this.myWallets));
+
+            // this.buildMyWallet(w);
+
+
+
+            let w = this.buildMyWallet(holdings);
+            // console.log('w', w);
+
+
+            // this.myWallets = Array.from(this.myWallets);
+            // this.myWallets.forEach(w => this.buildMyWallet(w) );
+
+            this.myWallets.push(w);
+
+        },
+
+        buildMyWallet: function(_myCoins_) {
+            console.log('buildmyWallet()', _myCoins_);
+            console.log('this.allCoins', this.allCoins);
+            
+            return this.allCoins.filter( coin => {
+                // WHAT IS THIS DOING?
+                return Object.keys(_myCoins_).indexOf(coin.symbol) >= 0;
+
+            // THIS ADDS NEW KEY:VALUE PAIRS TO THE COIN INFO.
+            }).map( c => {
+                return Object.assign({}, c, {
+                    holding: _myCoins_[c.symbol]
+                    ,holding_value:  c.price_usd * (_myCoins_[c.symbol] )
+                });
+
+            // THIS WILL SORT FROM HIGHEST VALUE TO LOWEST VALUE.
+            }).sort( (a, b) => {
+                return a.holding_value - b.holding_value;
+            }).reverse();
+
+        },
+
+
+
+/*
+        buildMyWallet: function(coins) {
+            // window.console.log('buildmyWallet()', this.myHoldings);
+            return coins.filter( coin => {
+                return Object.keys(this.myHoldings).indexOf(coin.symbol) >= 0;
+            }).map( c => {
+                return Object.assign({}, c, {
+                    holding: this.myHoldings[c.symbol]
+                    ,holding_value:  c.price_usd * (this.myHoldings[c.symbol] )
+                });
+            }).sort( (a, b) => {
+                return a.holding_value - b.holding_value;
+            }).reverse();
+        },
+ */
+
+
+
+
+
+
         formatAsUSD: function(n) {
             return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         },
@@ -113,9 +224,9 @@ eachVue.call(vues, (el, index) => {
                     icon = c+'-alt';
             }
             return icon;
-        }
+        },
 
-        ,fetchData: function() {
+        fetchData: function() {
 
             var self = this;
 
@@ -140,21 +251,20 @@ eachVue.call(vues, (el, index) => {
                 }, [] );
 
                 // console.log('self.allCoins', self.allCoins);
-                self.myWallet = self.buildMyWallet(self.allCoins);
-                self.totalUSD();
-                self.totalBTC();
-                self.buildChart2();
+                // self.myWallet = self.buildMyWallet(self.allCoins);
+                // self.totalUSD();
+                // self.totalBTC();
+                // self.buildChart2();
+
+                self.doneLoadingAllCoins();
 
                 // console.log('myWallet', self.myWallet);
 
-
-                document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
+                // document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
 
             }).catch(e => {
                 console.log('oops, something has gone wrong.', e);
             });
-
-
 
 
             fetch(self.globalMarket)
@@ -162,26 +272,10 @@ eachVue.call(vues, (el, index) => {
                     return response.json();
                 })
                 .then(function(myJSON) {
-                    // console.log(myJSON);
-                    // self.globalMarketCap = myJSON.total_market_cap_usd;
-                    // self.globalMarketCap = self.formatAsUSD(myJSON.total_market_cap_usd);
                     self.bitcoinDominance = myJSON.bitcoin_percentage_of_market_cap;
                     self.total24HrVolume = self.wordifyNumber(myJSON.total_24h_volume_usd);
-                    // console.log(self.formatAsUSD(self.globalMarketCap));
-                    // console.log(self.globalMarketCap);
-
                     self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
-                    // console.log( self.wordifyNumber(419281384539234123) );
-                    // console.log( self.wordifyNumber(419281384539234) );
-                    // console.log( self.wordifyNumber(419281384539) );
-                    // console.log( self.wordifyNumber(419281384) );
-                    // console.log( self.wordifyNumber(419281) );
-                    // console.log( self.wordifyNumber(419) );
-                    // console.log( self.wordifyNumber(41) );
-                    // console.log( self.wordifyNumber(4) );
                 });
-
-
 
             self.fetchTick++;
         },
@@ -232,8 +326,6 @@ eachVue.call(vues, (el, index) => {
 
         },
 
-
-
         totalBTC: function(){
             // console.log('totalBTC()');
             this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
@@ -253,53 +345,22 @@ eachVue.call(vues, (el, index) => {
 
         },
 
-
-
-
-
-        buildMyWallet: function(coins) {
-            // window.console.log('buildmyWallet()', this.myHoldings);
-            // this.allCoins = coins;
-
-            return coins.filter( coin => {
-                // return Object.keys(this.myHoldings).indexOf(coin.id) >= 0;
-                return Object.keys(this.myHoldings).indexOf(coin.symbol) >= 0;
-            }).map( c => {
-                return Object.assign({}, c, {
-                    holding: this.myHoldings[c.symbol]
-                    ,holding_value:  c.price_usd * (this.myHoldings[c.symbol] )
-                });
-            }).sort( (a, b) => {
-                return a.holding_value - b.holding_value;
-/*
-                let comparison = 0;
-                if (a.holding_value < b.holding_value) {
-                    comparison = 1;
-                } else if (b.holding_value < a.holding_value) {
-                    comparison = -1;
-                }
-                return comparison;
- */
-            }).reverse();
-
-        },
-
-
-
-
-
         filterCoin: function(x){
-            var arr = this.allCoins.slice();
-              return arr.filter(function(coin) {
+                    var arr = this.allCoins.slice();
+                      return arr.filter(function(coin) {
 
-                  // return coin.id.indexOf(x) > -1;
-                  if(coin.symbol === x){
+                          // return coin.id.indexOf(x) > -1;
+                          if(coin.symbol === x){
 
-                      return coin.symbol.indexOf(x) > -1;
-                  }
+                              return coin.symbol.indexOf(x) > -1;
+                          }
 
-              })
-        },
+                      })
+                },
+
+
+
+
 
 
 
@@ -310,15 +371,17 @@ eachVue.call(vues, (el, index) => {
     BILLBOARD CHARTS
     https://naver.github.io/billboard.js/
  */
-        buildChart2: function(){
+        buildChart2: function(_thisWallet_){
             // console.log('this.el', this.$el);
             // console.log('``` ', this.$el.querySelectorAll(".wallet") );
 
-            var thisWallet = this.$el;
+            // var thisWallet = this.$el;
+            var thisWallet = _thisWallet_;
             var thisChart = thisWallet.querySelectorAll(".chart")[0];
             var thisLegend = thisWallet.querySelectorAll(".legend")[0];
 
             var chartData = [];
+            // chartData = chartData.concat( this.myWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
             chartData = chartData.concat( this.myWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
             // console.log('chartData', chartData);
 
@@ -401,4 +464,4 @@ eachVue.call(vues, (el, index) => {
 
 
 
-});
+// });

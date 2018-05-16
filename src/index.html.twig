@@ -2,7 +2,37 @@
 {% include 'src/header.html' %}
 
 <!-- <main id="viewport" class="container pa2"> -->
-<main>
+<main id="masterDashboard">
+
+
+    <div class="mv4 tc">
+        <div class="">MarketCap: <strong>$${globalMarketCap}</strong></div>
+        <div class="">24/hr Volume: <strong>${total24HrVolume}</strong></div>
+        <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
+    </div>
+
+
+
+
+
+
+
+
+
+<div id="" class="wallet" data-holdings='{  "LTC": 1,
+                                            "RDD": 8000,
+                                            "DENT": 800,
+                                            "DGB": 400
+                                        }'>
+
+    <div class="chart" style="width: 100%; height:300px;"></div>
+
+</div>
+
+
+
+
+
 
 
 
@@ -26,13 +56,6 @@
                                     data-watchings='{
                                                     "BTC":1
                                                     }'>
-
-
-<div class="mb4 tc">
-    <div class="">MarketCap: <strong>$${globalMarketCap}</strong></div>
-    <div class="">24/hr Volume: <strong>${total24HrVolume}</strong></div>
-    <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
-</div>
 
 
 
@@ -64,11 +87,6 @@
             </div>
 
         </div>
-
-
-
-
-
 
 </div>
 
