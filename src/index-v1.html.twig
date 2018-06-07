@@ -20,7 +20,36 @@
 
 
 
-    <div id="masterWallet" >
+    <div id="masterWallet" class="wallet"   data-holdings='{
+                                                    "BTC": 0.01
+                                                    ,"LTC": 1
+                                                    ,"ETH": 0.1
+                                                    ,"EOS": 1
+                                                    ,"VERI": 1
+                                                    ,"DGB": 1000
+                                                    ,"THETA": 1000
+                                                }'
+                                            data-watchings='{
+                                                            "BTC":1
+                                                            }'>
+
+
+
+        <wallet :all-coins="allCoins" :holding='{ "BTC": 0.01, "LTC": 1 }'>
+            <h3>Wallet 1</h3>
+        </wallet>
+
+
+        <wallet :all-coins="allCoins" :holding='{ "ETH": 1, "EOS": 10 }'>
+            <h3>Wallet 2</h3>
+        </wallet>
+
+
+
+
+
+
+
 
 
         <div class="mv4 tc">
@@ -30,26 +59,17 @@
         </div>
 
 
-        <div class="flex flex-row flex-wrap justify-center">
-
-
-            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.01, "LTC": 1, "THETA": 100}'>
-                <h3>Wallet 1</h3>
-            </wallet>
-
-
-            <wallet :all-coins="allCoins" :holding='{ "ETH": 1, "EOS": 10 }' >
-                <h3>Wallet 2</h3>
-            </wallet>
-
-        </div>
 
 
 
 
 
 
-<!--
+
+
+
+
+
 
         <div class="chart_wrapper">
             <div class="centerTitle" v-on:click='descrete = !descrete'>
@@ -68,7 +88,7 @@
 
             <div v-for="coin in myWallet" class="myLegend_coin">
                 <div class="" v-if="!descrete" >${coin.holding }</div>
-                <i class="cc " v-bind:class="coinClass(coin.symbol)"></i>
+                <!-- <i class="cc " v-bind:class="coinClass(coin.symbol)"></i> -->
                 <div class="fw7">${coin.symbol}</div>
                 <div class="f7">${coin.name}</div>
                 <div class="f7 dark-pink">${coin.price_usd}</div>
@@ -78,7 +98,7 @@
                 <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > ${coin.percent_change_7d }% </div>
             </div>
 
-        </div> -->
+        </div>
 
 
 

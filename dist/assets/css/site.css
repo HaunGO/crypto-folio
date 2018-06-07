@@ -84,3 +84,9 @@ h6 {
   padding: 0.5em;
   width: 100px;
   text-align: center; }
+
+.walletBox {
+  background-color: #e1e1e1; }
+
+.coinBox {
+  background-color: rgba(0, 0, 0, 0.1); }
