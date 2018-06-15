@@ -10,10 +10,8 @@ var myMixin = {
         return {
             myWallet: [],
             bitcoinPrice: 0,
-
-            // thisChart: null,
+            totalHoldings: {},
         }
-
     },
 
     computed: {
@@ -32,10 +30,11 @@ var myMixin = {
 
 
     methods: {
+
         mixinBuildWallet: function(_myCoins, _allCoins) {
             // console.log('mixinBuildWallet()()()()');
             // console.log('mixinBuildWallet', _myCoins, _allCoins);
-            console.log('mixinBuildWallet() ', _myCoins);
+            // console.log('mixinBuildWallet() ', _myCoins);
             return _allCoins.filter(coin => {
                 return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
             }).map(c => {
@@ -54,7 +53,7 @@ var myMixin = {
 
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){
-            console.log('filterCoin() ', x);
+            // console.log('filterCoin() ', x);
             var arr = this.allCoins.slice();
             return arr.filter(function(coin) {
                 if(coin.symbol === x){
@@ -64,7 +63,7 @@ var myMixin = {
         },
 
         formatAsUSD: function(n){
-            console.log('formatAsUSD() ', n);
+            // console.log('formatAsUSD() ', n);
             return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         },
 
@@ -128,7 +127,7 @@ var myMixin = {
         },
 
         totalUSD: function(_thisWallet_){
-            console.log('totalUSD()');
+            // console.log('totalUSD()');
             var N = _thisWallet_.reduce( (total, c) => {
                 return total + c.holding_value;
             }, 0)
@@ -137,100 +136,11 @@ var myMixin = {
         },
 
         totalBTC: function(_thisWallet_){
-            console.log('totalBTC()');
+            // console.log('totalBTC()');
             this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
             let n = Number(this.myHoldingsTotalInUSD) / Number(this.bitcoinPrice) ;
             this.myHoldingsTotalInBTC = n.toFixed(6);
-        },
-
-
-
-
-
-        //
-        // buildChart: function(_this_, _thisWallet_){
-        //     console.log('buildChart() ', _this_ );
-        //
-        //     var thisWallet = _thisWallet_;
-        //     var chartDiv = _this_.querySelectorAll(".chart")[0];
-        //
-        //     var chartData = [];
-        //
-        //     chartData = chartData.concat( thisWallet.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
-        //
-        //     var chartTitle = "";
-        //
-        //     this.thisChart = bb.generate({
-        //         // bindto: "#chart",
-        //         bindto: chartDiv,
-        //         donut: {
-        //             // title: chartTitle,
-        //             labels:false,
-        //             expand:true,
-        //             label: {
-        //                 show:false
-        //                 // ratio: 0.01,
-        //             }
-        //         },
-        //         // legend:{
-        //             // show:false,
-        //             // position:"bottom",
-        //         // },
-        //         data: {
-        //             type: "donut",
-        //             labels: false,
-        //             columns: chartData,
-        //             colors: {
-        //                 "Bitcoin" : "#f9a021",
-        //                 "Litecoin" : "#b6b6b6",
-        //                 "Ethereum" : "#999999",
-        //                 "OmiseGO" : "#3979ff",
-        //                 "EOS" : "#9aa3ee",
-        //                 "Populous" : '#cfb949',
-        //                 "ReddCoin" : "#f01416",
-        //                 "Veritaseum" : "#ff991d",
-        //                 "Pillar" : "#00beff",
-        //                 "Dent" : "#af0000",
-        //                 "Cardano" : "#33c8c9"
-        //             },
-        //             onclick: function (d, i) {
-        //                 console.log("onclick", d, i);
-        //                 // console.log(chart.selected());
-        //             },
-        //             onover: function (d, i) {
-        //                 // console.log("onover", d, i);
-        //             },
-        //             onout: function (d, i) {
-        //                 // console.log("onout", d, i);
-        //             }
-        //
-        //         },
-        //
-        //
-        //     });
-        //
-        //
-        //     // this.thisChart.focus("Litecoin");
-        //
-        //     this.thisChart.legend.hide();
-        //
-        //
-        //
-        //
-        //     console.log('!~!~!~!~!~!~!~!~!~chart  ', this.thisChart);
-        //
-        //     // return this.thisChart;
-        //
-        //
-        //
-        //
-        // }
-
-
-
-
-
-
+        }
     }
 }
 

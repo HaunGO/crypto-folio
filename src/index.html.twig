@@ -32,14 +32,19 @@
 
         <div class="flex flex-row flex-wrap justify-center">
 
-
-            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.01, "LTC": 1, "THETA": 100}'>
+            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.015, "LTC":1}'>
                 <h3>Wallet 1</h3>
+                <!-- <chart></chart> -->
             </wallet>
 
-
-            <wallet :all-coins="allCoins" :holding='{ "ETH": 1, "EOS": 10 }' >
+            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
                 <h3>Wallet 2</h3>
+                <!-- <chart></chart> -->
+            </wallet>
+
+            <wallet :all-coins="allCoins" :holding='{ "THETA": 500, "DGB": 3000 }'>
+                <h3>Wallet 3</h3>
+                <!-- <chart></chart> -->
             </wallet>
 
         </div>
@@ -48,37 +53,12 @@
 
 
 
-
-<!--
-
-        <div class="chart_wrapper">
-            <div class="centerTitle" v-on:click='descrete = !descrete'>
-                <div class="" v-if="!descrete">
-                    <div class="tc pt3"><strong>$${myHoldingsTotalInUSD | formatUSD} USD</strong></div>
-                    <div class="tc pt3"><strong>${myHoldingsTotalInBTC} BTC</strong></div>
-                </div>
-                <div class="dot" v-else></div>
-            </div>
-            <div class="chart" style="width: 100%; height:300px;"></div>
-        </div>
+        <wallet :all-coins="allCoins" :holding='totalHoldings'>
+            <h3>Master Wallet</h3>
+        </wallet>
 
 
 
-        <div class="myLegend flex flex-wrap justify-center">
-
-            <div v-for="coin in myWallet" class="myLegend_coin">
-                <div class="" v-if="!descrete" >${coin.holding }</div>
-                <i class="cc " v-bind:class="coinClass(coin.symbol)"></i>
-                <div class="fw7">${coin.symbol}</div>
-                <div class="f7">${coin.name}</div>
-                <div class="f7 dark-pink">${coin.price_usd}</div>
-                <div class="" v-if="!descrete">$${coin.holding_value | formatUSD}</div>
-                <div class="f7 mt2" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" > ${coin.percent_change_1h }% </div>
-                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" > ${coin.percent_change_24h }% </div>
-                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > ${coin.percent_change_7d }% </div>
-            </div>
-
-        </div> -->
 
 
 
