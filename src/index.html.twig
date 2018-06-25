@@ -34,17 +34,28 @@
 
             <wallet :all-coins="allCoins" :holding='{ "BTC": 0.015, "LTC":1}'>
                 <h3>Wallet 1</h3>
-                <!-- <chart></chart> -->
+
+                <chart></chart>
+                <coinbox></coinbox>
+
             </wallet>
 
             <wallet :all-coins="allCoins" :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
                 <h3>Wallet 2</h3>
-                <!-- <chart></chart> -->
+                <chart></chart>
             </wallet>
 
             <wallet :all-coins="allCoins" :holding='{ "THETA": 500, "DGB": 3000 }'>
                 <h3>Wallet 3</h3>
                 <!-- <chart></chart> -->
+                <chart></chart>
+
+            </wallet>
+            <wallet :all-coins="allCoins" :holding='{ "VERI": 1, "PPT": 1 }'>
+                <h3>Wallet 4</h3>
+                <!-- <chart></chart> -->
+                <chart></chart>
+
             </wallet>
 
         </div>
@@ -55,6 +66,7 @@
 
         <wallet :all-coins="allCoins" :holding='totalHoldings'>
             <h3>Master Wallet</h3>
+            <chart class="bigchart"></chart>
         </wallet>
 
 

@@ -7,6 +7,7 @@ import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
 import './component-wallet.js';
+import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
 
@@ -45,7 +46,7 @@ var w = new Vue({
             thisWallet: null,
             masterWallet: null,
 
-            // fetchTick: 0,
+            fetchTick: 0,
             // descrete:true
         }
     },
@@ -107,12 +108,6 @@ var w = new Vue({
 
                 // document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
 
-/*
-
-
-
- */
-
 
                 self.masterWallet = self.mixinBuildWallet(this.totalHoldings, self.allCoins);
 
@@ -155,7 +150,7 @@ var w = new Vue({
                     self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
                 });
 
-            // self.fetchTick++;
+            self.fetchTick++;
 
         }
 

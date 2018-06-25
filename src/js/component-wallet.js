@@ -35,44 +35,27 @@ Vue.component('wallet', {
             <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }} USD</div>
             <div class="">{{ myHoldingsTotalInBTC }} BTC</div>
 
-            <chart></chart>
+            <coinbox :this-wallet="thisWallet"></coinbox>
 
-            <div class="flex flex-row flex-wrap justify-center pt2 ">
-                <coin v-for="coin in thisWallet" :key="coin.name" :coin="coin">
-                </coin>
-            </div>
+
         </div>`,
     created () {
         // console.log('<wallet> component created');
         EventBus.$on('on-data-has-loaded', this.buildWallet );
         console.log('holding ', this.holding);
 
-/*
-load lodash.
- */
-function mergeHoldings(o1, o2) {
-    var a = Object.keys(o1);
-    var b = Object.keys(o2);
-    var c = a.concat(b);
-    var uniques = _.uniq(c);
-
-    return uniques.reduce((h,k) => {
-        var a = o1[k] || 0;
-        var b = o2[k] || 0;
-        h[k] = a + b;
-        return h;
-    }, {})
-}
 
 
 
 
 
 
+        // USING THE SPREAD OPERATOR (...) TO COMBINE OBJECTS, BUT IT DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
-        this.$root.totalHoldings = mergeHoldings(this.$root.totalHoldings, this.holding);
+        // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
+        this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
 
-        console.log('~~~ ', this.$root.totalHoldings);
+        // console.log('~~~ ', this.$root.totalHoldings);
 
 
         // let aaa = Object.assign({}, this.totalHoldings, this.holding );
@@ -101,6 +84,25 @@ function mergeHoldings(o1, o2) {
             EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
 
             // this.masterHoldings = this.holding;
+        },
+        /*
+            USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.
+         */
+        mergeHoldings(o1, o2) {
+            var a = Object.keys(o1);
+            var b = Object.keys(o2);
+            var c = a.concat(b);
+            // THIS _LODASH METHOD IS WHERE THE MAGIC HAPPENS:
+            // https://lodash.com/docs/4.17.10#uniq
+            var uniques = _.uniq(c);
+
+            return uniques.reduce((h,k) => {
+                // equals this or 0 (instead of null or undefined)
+                var a = o1[k] || 0;
+                var b = o2[k] || 0;
+                h[k] = a + b;
+                return h;
+            }, {})
         }
     }
 })

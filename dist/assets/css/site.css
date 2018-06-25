@@ -86,7 +86,24 @@ h6 {
   text-align: center; }
 
 .walletBox {
-  background-color: #e1e1e1; }
+  background-color: #e1e1e1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: justify;
+      justify-content: space-between; }
+  .walletBox .chart {
+    position: relative;
+    display: block;
+    height: 150px;
+    width: 140px;
+    margin: auto; }
+    .walletBox .chart.bigchart {
+      width: 80%;
+      height: auto;
+      min-height: 100px;
+      max-height: 300px; }
 
 .coinBox {
   background-color: rgba(0, 0, 0, 0.1); }

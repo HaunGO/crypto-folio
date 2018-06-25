@@ -41,7 +41,8 @@ Vue.component('chart', {
                 // this.thisChart.focus();
             });
 
-            EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart);
+            // EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart);
+            EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart );
 
 
         },

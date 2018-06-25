@@ -1,15 +1,7 @@
 
-
-
-
-
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
-
-
-// {{coin.symbol}} : {{coin.holding_value | formatUSD}}
-// <div class="f7">{{ coin.name }}</div>
 
 Vue.component('coin', {
     mixins: [myMixin],
@@ -21,11 +13,11 @@ Vue.component('coin', {
                 <div class="fw7">{{ coin.symbol }}</div>
                 <div class="">{{ coin.holding }}</div>
                 <div class="">$\{{ coin.holding_value | formatUSD }}</div>
-
-            <div class="f7 mt2" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" >$\{{ coin.price_usd }} </div>
-            <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" > {{ coin.percent_change_1h }}% </div>
-            <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" > {{ coin.percent_change_24h }}% </div>
-            <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > {{ coin.percent_change_7d }}% </div>
+    <hr>
+                <div class="f5 mt2" >$\{{ coin.price_usd }} </div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" > {{ coin.percent_change_1h }}% </div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" > {{ coin.percent_change_24h }}% </div>
+                <div class="f7" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" > {{ coin.percent_change_7d }}% </div>
 
             </div>
         </div>`,
@@ -43,12 +35,6 @@ Vue.component('coin', {
         }
     }
 })
-
-
-
-
-
-
 
 
 export default ' ';

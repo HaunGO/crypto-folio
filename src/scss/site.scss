@@ -153,6 +153,25 @@ h6{
 .walletBox{
     background-color:#e1e1e1;
     // border:1px solid #ababab;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .chart{
+        position: relative;
+        display:block;
+        // border:1px solid gold;
+        height:150px;
+        width:140px;
+        margin:auto;
+        &.bigchart{
+            // border:1px solid green;
+            width:80%;
+            height:auto;
+            min-height:100px;
+            max-height:300px;
+        }
+    }
 }
 
 
