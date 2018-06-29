@@ -100,10 +100,9 @@ h6 {
     width: 140px;
     margin: auto; }
     .walletBox .chart.bigchart {
-      width: 80%;
-      height: auto;
-      min-height: 100px;
-      max-height: 300px; }
+      height: 300px;
+      width: 280px;
+      margin: auto; }
 
 .coinBox {
   background-color: rgba(0, 0, 0, 0.1); }

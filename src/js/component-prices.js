@@ -1,43 +1,35 @@
 
-
-
-
+// THIS IS NOT HOOKED UP YET.
 
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
 
-
-// {{coin.symbol}} : {{coin.holding_value | formatUSD}}
-// <div class="f7">{{ coin.name }}</div>
-
-Vue.component('coinbox', {
+Vue.component('prices', {
     mixins: [myMixin],
     data: function () {
         return {
-            thisWallet: null,
+            // thisWallet: null,
         }
     },
-    props: ['coin', 'thisWalletttt'],
+    props: ['', ''],
     template:
-    `<div>
-        <div class="flex flex-row flex-wrap justify-center pt2 ">
-            <coin v-for="coin in thisWallet" :key="coin.name" :coin="coin">
-            </coin>
-        </div>
-    </div>`,
+        `<div>
+            <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }} USD</div>
+            <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+        </div>`,
 
     mounted: function () {
         // console.log("chart mounting");
         this.setupEvents();
     },
 
-    methods:{
+    methods: {
         setupEvents: function () {
 
             EventBus.$on(`wallet-built-${this.$parent._uid}`, (w) => {
                 // console.log('w = ', w );                
-                this.thisWallet = w;
+                // this.thisWallet = w;
             });
 
         },

@@ -18,63 +18,39 @@ Vue.component('wallet', {
             thisWallet: null,
             // allWallets: null,
         }
-
     },
     props: [
         'holding',
         'allCoins',
         'title',
-        // 'totalHoldings',
-        // 'thisChart'
     ],
-    // `<div class="outline pa1 ma1" v-on:click="buildWallet">
-    // <div>{{ holding }}</div>
+    // <coinbox :this-wallet="thisWallet" ></coinbox >
     template:
-        `<div class="walletBox ma1 tc">
-            <slot></slot>
-            <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }} USD</div>
-            <div class="">{{ myHoldingsTotalInBTC }} BTC</div>
+    `<div class="walletBox ma1 tc">
+        <slot></slot>
+        <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }} USD</div>
+        <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+    </div>`,
 
-            <coinbox :this-wallet="thisWallet"></coinbox>
-
-
-        </div>`,
+ 
+ 
     created () {
         // console.log('<wallet> component created');
         EventBus.$on('on-data-has-loaded', this.buildWallet );
         console.log('holding ', this.holding);
-
-
-
-
-
-
 
         // USING THE SPREAD OPERATOR (...) TO COMBINE OBJECTS, BUT IT DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
         this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
 
-        // console.log('~~~ ', this.$root.totalHoldings);
-
-
-        // let aaa = Object.assign({}, this.totalHoldings, this.holding );
-        // this.totalHoldings = aaa;
-        // console.log('totalHoldings' , this.totalHoldings);
-        // this.totalHoldings = extend(this.holding);
-        // console.log('totalHoldings', this.totalHoldings);
     },
     methods:{
         buildWallet(){
             // console.log('wallet.buildWallet() !!!', this.holding);
             // console.log('wallet.buildWallet() !!!', this.totalHoldings);
 
-            var useThis;
-            // if(this.holding == undefined || null){
-                // useThis = this.totalHoldings;
-            // }else{
-                useThis = this.holding;
-            // }
+            var useThis = this.holding;
 
             this.thisWallet = this.mixinBuildWallet(useThis, this.allCoins);
 
@@ -83,11 +59,10 @@ Vue.component('wallet', {
 
             EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
 
-            // this.masterHoldings = this.holding;
         },
-        /*
-            USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.
-         */
+
+
+        /* USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.  */
         mergeHoldings(o1, o2) {
             var a = Object.keys(o1);
             var b = Object.keys(o2);
