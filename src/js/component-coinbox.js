@@ -18,9 +18,9 @@ Vue.component('coinbox', {
             thisWallet: null,
         }
     },
-    props: ['coin', 'thisWalletttt'],
+    props: ['coin'],
     template:
-    `<div>
+    `<div class="coinbox">
         <div class="flex flex-row flex-wrap justify-center pt2 ">
             <coin v-for="coin in thisWallet" :key="coin.name" :coin="coin">
             </coin>

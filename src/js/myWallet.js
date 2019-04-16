@@ -6,11 +6,11 @@
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
+import "./component-jsonwallet.js";
 import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
-
 
 
 
@@ -27,6 +27,7 @@ var w = new Vue({
                     "https://api.coinmarketcap.com/v1/ticker/",
                     "https://api.coinmarketcap.com/v1/ticker/dent/",
                     "https://api.coinmarketcap.com/v1/ticker/pillar/",
+                    "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
                     // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
             ],
             globalMarket : "https://api.coinmarketcap.com/v1/global/",
@@ -58,8 +59,9 @@ var w = new Vue({
     },
 
 
+
     mounted: function(){
-        console.log('mounted()');
+        // console.log('mounted()');
 
         this.fetchData();
         this.fetchGlobalData();
@@ -71,10 +73,8 @@ var w = new Vue({
     },
 
 
+
     methods: {
-
-
-
 
 
         fetchData: function(){
@@ -113,7 +113,6 @@ var w = new Vue({
 
                 // console.log('data is available', self.masterWallet);
                 console.log('data is available', self.masterWallet);
-
 
 
 

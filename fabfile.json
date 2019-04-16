@@ -8,6 +8,12 @@
 				"node_modules/rxjs/bundles/Rx.js",
 				"node_modules/vue/dist/vue.js",
 				"node_modules/lodash/lodash.js"	
+			],
+			"dist/assets/js/bundle2.min.js" : [
+				"src/js/bundle2.js",
+				"node_modules/gsap/TimelineLite.js",
+				"node_modules/gsap/TweenLite.js",
+				"node_modules/gsap/CSSPlugin.js"
 			]
 		},
 		"css": {

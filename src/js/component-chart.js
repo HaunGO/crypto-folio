@@ -1,11 +1,7 @@
 
 
-
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
-
-
-
 
 
 Vue.component('chart', {
@@ -45,8 +41,6 @@ Vue.component('chart', {
             EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart );
 
         },
-
-
 
 
 
