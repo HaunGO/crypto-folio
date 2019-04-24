@@ -1,8 +1,6 @@
 
-
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
-
 
 Vue.component('wallet', {
     mixins: [myMixin],
@@ -26,11 +24,11 @@ Vue.component('wallet', {
     template:
     `<div class="walletBox ma1 tc">
         <slot></slot>
-        <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }} USD</div>
         <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+        <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
     </div>`,
 
- 
+
  
     created () {
         // console.log('<wallet> component created');

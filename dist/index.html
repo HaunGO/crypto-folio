@@ -48,7 +48,7 @@
         <a href="/index.html">•</a>
         <a href="/a.html">A</a>
         <a href="/b.html">B</a>
-    </nav> 
+    </nav>
 </header>
 
 <!-- <main id="viewport" class="container pa2"> -->
@@ -58,13 +58,19 @@
     <div id="masterWallet" >
 
 
+
+        <div class="mv4 tc">
+            <div class="">MarketCap: <strong>$${globalMarketCap}</strong></div>
+            <div class="">24/hr Volume: <strong>${total24HrVolume}</strong></div>
+            <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
+        </div>
+
+
         <wallet :all-coins="allCoins" :holding='totalHoldings'>
             <h3>Master Wallet</h3>
             <chart class="bigchart"></chart>
             <coinbox></coinbox>
         </wallet>
-
-
 
 
         <div class="flex flex-row flex-wrap justify-center">

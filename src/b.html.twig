@@ -1,0 +1,57 @@
+
+{% include 'src/header.html' %}
+
+<!-- <main id="viewport" class="container pa2"> -->
+<main>
+
+
+
+
+    <div id="masterWallet" >
+
+
+        <wallet :all-coins="allCoins" :holding='totalHoldings'>
+            <h3>Master Wallet</h3>
+            <chart class="bigchart"></chart>
+            <coinbox></coinbox>
+        </wallet>
+
+ 
+        <div class="mv4 tc">
+            <div class="">MarketCap: <strong>$${globalMarketCap}</strong></div>
+            <div class="">24/hr Volume: <strong>${total24HrVolume}</strong></div>
+            <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
+        </div>
+
+
+
+        <jsonwallet data-jsonholding="./assets/mycoins.json" >
+
+        </jsonwallet>
+
+ 
+    </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+
+
+
+
+{% include 'src/footer.html' %}

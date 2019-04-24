@@ -1,12 +1,6 @@
 
-
-
-
-
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
-
-
 
 // {{coin.symbol}} : {{coin.holding_value | formatUSD}}
 // <div class="f7">{{ coin.name }}</div>
@@ -46,10 +40,4 @@ Vue.component('coinbox', {
 })
 
 
-
-
-
-
-
-
-export default ' ';
+export default '';

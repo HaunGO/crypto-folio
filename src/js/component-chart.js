@@ -61,10 +61,10 @@ Vue.component('chart', {
                 bindto: chartDiv,
                 donut: {
                     // title: chartTitle,
-                    labels:false,
-                    expand:true,
+                    labels: false,
+                    expand: true,
                     label: {
-                        show:false
+                        show: false
                         // ratio: 0.01,
                     }
                 },

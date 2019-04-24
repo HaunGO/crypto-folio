@@ -11,17 +11,19 @@
 			],
 			"dist/assets/js/bundle2.min.js" : [
 				"src/js/bundle2.js",
-				"node_modules/gsap/TimelineLite.js",
-				"node_modules/gsap/TweenLite.js",
-				"node_modules/gsap/CSSPlugin.js"
+				"node_modules/gsap/TimelineMax.js"
+				// "node_modules/gsap/TimelineLite.js",
+				// "node_modules/gsap/TweenLite.js",
+				// "node_modules/gsap/CSSPlugin.js"
 			]
 		},
 		"css": {
 			"dist/assets/css/site.css" : "src/scss/site.scss"
 		},
-		"twig": {
+		"twig": { 
 		    "dist/index.html": "src/index.html.twig",
-		    "dist/a.html": "src/a.html.twig"
+		    "dist/a.html": "src/a.html.twig",
+		    "dist/b.html": "src/b.html.twig"
 		},
 		"browserSync": {
 			"server": "dist/"

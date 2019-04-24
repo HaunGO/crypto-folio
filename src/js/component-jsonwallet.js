@@ -24,7 +24,7 @@ Vue.component("jsonwallet", {
 
   template: `
     <div>
-      <h1>HELLO jsonwallet FRIEND</h1>
+      <h1>HELLO jsonwallet</h1>
       <div v-for="wallets in walletJson">
         <div v-for="wallet in wallets">
             <wallet :all-coins="allCoins" :holding=wallet>
