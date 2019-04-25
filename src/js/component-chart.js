@@ -14,53 +14,33 @@ Vue.component('chart', {
     template: `<div ref='chart' class="chart tc "> [chart] </div>`,
 
     mounted: function(){
-        // console.log("chart mounting");
         this.setupEvents();
     },
 
 
-
     methods: {
-
         setupEvents: function(){
-            // EventBus.$on(`coin-rollover-`, focusThis);
             EventBus.$on(`coin-mouseover-${this.$parent._uid}`, (c) => {
-                // console.log("this in focus", this);
                 this.thisChart.focus(c);
-
             });
-
             EventBus.$on(`coin-mouseleave-${this.$parent._uid}`, (c) => {
-                // console.log("this OUT focus", this);
                 this.thisChart.defocus(c);
                 this.thisChart.revert();
-                // this.thisChart.focus();
             });
-
-            // EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart);
             EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart );
-
         },
 
-
-
         buildChart: function(_thisWallet_){
-            console.log('~!~!~!~!~!~!~!~!~ !~ ! ~! ~! ~! ', _thisWallet_);
+            console.log("~! component-chart : buildChart(){} ", _thisWallet_);
             var chartDiv = this.$refs.chart;
-
-            // console.log('refs', this.$refs);
-
             var chartData = [];
 
             chartData = chartData.concat( _thisWallet_.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
 
-            var chartTitle = "";
-
             this.thisChart = bb.generate({
-                // bindto: "#chart",
                 bindto: chartDiv,
                 donut: {
-                    // title: chartTitle,
+                    // title: "",
                     labels: false,
                     expand: true,
                     label: {
@@ -91,18 +71,9 @@ Vue.component('chart', {
                     },
                     onclick: function (d, i) {
                         // console.log("onclick", d, i);
-                        // console.log(chart.selected());
                     },
                     onover: function (d, i) {
                         // console.log("onover", d, i);
-
-                        // EventBus.$on(`chart-mouseover-${this.$parent._uid}`, (c) => {
-                        //     // console.log("this OUT focus", this);
-                        //     this.thisChart.defocus(c);
-                        //     this.thisChart.revert();
-                        //     // this.thisChart.focus();
-                        // });
-
                     },
                     onout: function (d, i) {
                         // console.log("onout", d, i);
@@ -113,20 +84,7 @@ Vue.component('chart', {
 
             });
 
-
-            // this.thisChart.focus("Litecoin");
-
             this.thisChart.legend.hide();
-
-
-
-
-            // console.log('!~!~!~!~!~!~!~!~!~chart  ', this.thisChart);
-
-            // return this.thisChart;
-
-
-
 
         }
     }

@@ -7,44 +7,32 @@ Vue.component('wallet', {
     data: function () {
 
         return {
-            // myWallet: [],
             myHoldingsTotalInUSD: 0,
             myHoldingsTotalInBTC: 0,
-            // bitcoinPrice: 0,
             thisWallet: null,
-            // allWallets: null,
         }
     },
-    props: [
-        'holding',
-        'allCoins',
-        'title',
-    ],
-    // <coinbox :this-wallet="thisWallet" ></coinbox >
+    props: [ 'holding', 'allCoins', 'title' ],
     template:
     `<div class="walletBox ma1 tc">
         <slot></slot>
         <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
         <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
     </div>`,
-
-
- 
+  
     created () {
         // console.log('<wallet> component created');
         EventBus.$on('on-data-has-loaded', this.buildWallet );
-        console.log('holding ', this.holding);
+        // console.log('holding ', this.holding);
 
-        // USING THE SPREAD OPERATOR (...) TO COMBINE OBJECTS, BUT IT DOES NOT TOTAL VALUES OF REPEATED KEYS.
+        // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
         this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
-
     },
     methods:{
         buildWallet(){
             // console.log('wallet.buildWallet() !!!', this.holding);
-            // console.log('wallet.buildWallet() !!!', this.totalHoldings);
 
             var useThis = this.holding;
 
@@ -78,7 +66,4 @@ Vue.component('wallet', {
     }
 })
 
-
-
-
-export default ' ';
+export default '';

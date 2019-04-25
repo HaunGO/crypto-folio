@@ -1,12 +1,8 @@
 
 
 var myMixin = {
-    // created: function() {
-        // console.log('myMixin created() ~~~~~~~~~');
-    // },
 
     data: function () {
-
         return {
             myWallet: [],
             bitcoinPrice: 0,
@@ -28,13 +24,13 @@ var myMixin = {
         }
     },
 
-
     methods: {
-
         mixinBuildWallet: function(_myCoins, _allCoins) {
             // console.log('mixinBuildWallet()()()()');
             // console.log('mixinBuildWallet', _myCoins, _allCoins);
+            console.log('mixinBuildWallet', _allCoins);
             // console.log('mixinBuildWallet() ', _myCoins);
+           
             return _allCoins.filter(coin => {
                 return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
             }).map(c => {
@@ -46,10 +42,6 @@ var myMixin = {
                 return a.holding_value - b.holding_value;
             }).reverse();
         },
-
-
-
-
 
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){
@@ -123,7 +115,6 @@ var myMixin = {
             }
 
             return Math.round(parseFloat(num) * 10) / 10 + ' ' + incrementName;
-
         },
 
         totalUSD: function(_thisWallet_){

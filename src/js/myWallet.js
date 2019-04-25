@@ -6,12 +6,11 @@
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
-import "./component-jsonwallet.js";
+import './component-jsonwallets.js';
 import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
-
 
 
 
@@ -30,23 +29,15 @@ var w = new Vue({
                     "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
                     // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
             ],
-            globalMarket : "https://api.coinmarketcap.com/v1/global/",
 
+            globalMarket : "https://api.coinmarketcap.com/v1/global/",
             globalMarketCap: 0,
             bitcoinDominance: 0,
             total24HrVolume: 0,
-
             allCoins: [],
-
-            // myHoldings: {  "PPT": 100, "VERI": 1 },
-
-            // myTotalHoldingsInUSD: 0,
-            // myTotalHoldingsInBTC: 0,
             bitcoinPrice: 0,
-
             thisWallet: null,
             masterWallet: null,
-
             fetchTick: 0,
             // descrete:true
         }
@@ -61,21 +52,13 @@ var w = new Vue({
 
 
     mounted: function(){
-        // console.log('mounted()');
-
         this.fetchData();
         this.fetchGlobalData();
-
-        // setInterval(function () {
-        //     this.fetchData();
-        // }.bind(this), 30000);
-
     },
 
 
 
     methods: {
-
 
         fetchData: function(){
 
@@ -101,25 +84,12 @@ var w = new Vue({
                     return acc.concat(cur);
                 }, [] );
 
-                // self.myWallet = self.buildMyWallet(self.allCoins);
-                // self.totalUSD();
-                // self.totalBTC();
-                // self.buildChart2();
-
-                // document.title = this.formatAsUSD(this.myHoldingsTotalInUSD);
-
-
                 self.masterWallet = self.mixinBuildWallet(this.totalHoldings, self.allCoins);
 
-                // console.log('data is available', self.masterWallet);
                 console.log('data is available', self.masterWallet);
-
-
 
                 Vue.nextTick(function () {
                     EventBus.$emit('on-data-has-loaded');
-                    // console.log('master-wallet- EMIT');
-                    // EventBus.$emit('master-wallet-built', self.masterWallet);
                 })
 
             }).catch(e => {

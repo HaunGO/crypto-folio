@@ -2,26 +2,14 @@
 
 {
     "wallets": {
-
         "one":  {
-                    "BTC": 0.002,
-                    "ETH": 0.5
+                    "BTC": 0.01,
+                    "LTC": 0.875
                 },
 
-        "two":  {
-                    "DGB": 5000,
-                    "LTC": 1
-                },
-
-        "three":{
-                    "PPT": 20,
-                    "VERI": 5
-                },
-
-        "four": {
-                    "EOS": 10,
-                    "ADA": 500,
-                    "THETA": 500
+        "two": {
+                    "EOS": 9,
+                    "ADA": 505
                 }
     }
 }
