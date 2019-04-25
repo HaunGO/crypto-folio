@@ -1,7 +1,2 @@
 
-node_modules
-src/index.html.twig
-dist/index.html
-src/a.html.twig
-dist/a.html
- 
+node_modules 
