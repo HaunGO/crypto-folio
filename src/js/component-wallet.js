@@ -1,6 +1,8 @@
 import Vue from "vue/dist/vue.esm.js";
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
+// import store from "./store.js";
+
 
 Vue.component('wallet', {
     mixins: [myMixin],
@@ -13,17 +15,17 @@ Vue.component('wallet', {
     },
     props: [ 'holding', 'allCoins', 'title' ],
     template:
-        `<div class="walletBox ma1 tc">
-            <slot></slot>
-            <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
-            <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
+            `<div class="walletBox ma1 tc">
+                <slot></slot>
             </div>`,
+            // <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+            // <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
   
     created () {
         // console.log('<wallet> component created');
         EventBus.$on('on-data-has-loaded', this.buildWallet );
         // console.log('holding ', this.holding);
-
+ 
         // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
@@ -41,6 +43,10 @@ Vue.component('wallet', {
             this.totalBTC(this.thisWallet);
 
             EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
+
+            //  console.log( store.state.allCoins );
+            // console.log("!@!@!@!@!@! ", this.$store.getters.allCoins);
+
 
         },
 

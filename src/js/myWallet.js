@@ -3,56 +3,31 @@
 // var apiURL = 'https://api.github.com/repositories/11730342/commits?per_page=5&sha=';
 // var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
-
+ 
 import Vue from "vue/dist/vue.esm.js";
-import Vuex from "vuex";
-import Rx from "rxjs/Rx";
+// import Vuex from "vuex";
+// import Rx from "rxjs/Rx";
 import _ from "lodash";
-
-
-Vue.use(Vuex);
-
-
-
-const store = new Vuex.Store({
-  state: {
-    count: 0,
-    allCoins: []
-  },
-  mutations: {
-    increment(state) {
-      state.count++;
-    },
-    addAllCoins(state, coin) {
-        state.allCoins = coin;
-    }
-  }
-});
-// store.commit('increment')
-// console.log(store.state.count) // -> 1
-// store.commit('increment')
-// console.log(store.state.count) // -> 1
-// store.commit('increment')
-// console.log(store.state.count) // -> 1
 
 
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
+import store from "./store.js";
 
-// import './component-jsonwallets.js';
+import './component-jsonwallets.js';
 import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
 import './component-totals.js';
 
-
+  
 
 var w = new Vue({
     el: '#masterWallet',
     delimiters: ['${', '}'],
     mixins: [myMixin],
-
+    store: store,
     data: function () {
         return {
           wallet: "wallet",
@@ -132,8 +107,10 @@ var w = new Vue({
                 console.log('data is available', self.masterWallet);
                 
                 Vue.nextTick(function () {
-                    // console.log('?~~~~~~~ ', store.state.allCoins);
-                    EventBus.$emit('on-data-has-loaded');
+                // console.log( "?~~~~~~~ ", sthis.$store.getters.allCoins );
+                    EventBus.$emit(
+                        "on-data-has-loaded"
+                    );
                 })
 
             }).catch(e => {

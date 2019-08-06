@@ -1,3 +1,4 @@
+// import store from "./store.js";
 
 
 var myMixin = {
@@ -47,14 +48,15 @@ var myMixin = {
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){
             // console.log('filterCoin() ', x);
-            var arr = this.allCoins.slice();
+            // var arr = this.allCoins.slice();
+            var arr = this.$store.getters.allCoins.slice();
             return arr.filter(function(coin) {
                 if(coin.symbol === x){
                     return coin.symbol.indexOf(x) > -1;
                 }
             })
         },
-        
+
         formatAsUSD: function(n){
             // console.log('formatAsUSD() ', n);
             return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');

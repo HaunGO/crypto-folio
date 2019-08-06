@@ -2,6 +2,7 @@ import Vue from "vue/dist/vue.esm.js";
 
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
+// import store from "./store.js";
 
 
 Vue.component("totals", {
@@ -16,10 +17,8 @@ Vue.component("totals", {
   },
 
   template: `<div class="totals tc ">
-                    [ ---------
-                    <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
-					<div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
-					--------- ]
+				<div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+				<div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
 			</div>`,
 
   mounted: function() {
@@ -41,7 +40,7 @@ Vue.component("totals", {
 		//   console.log("this", this);
 		//   this.thisWallet = this.mixinBuildWallet( this.holding, this.allCoins );
 		this.totalUSD(_thisW_); 
-		// this.totalBTC(_thisW_);
+		this.totalBTC(_thisW_);
 		// 	 this.thisWallet = w;
 		//   this.myHoldingsTotalInUSD = this.totalUSD(this.thisWallet);
 		//   this.myHoldingsTotalInBTC = 2;
