@@ -24,13 +24,13 @@
 
         <link rel="stylesheet" media="screen" href="assets/css/site.css">
 
-        <script src="assets/js/bundle.min.js"></script>
+        {# <script src="assets/js/bundle.min.js"></script> #}
 
     </head>
 <body>
 
 <main id="">
-
+ 
 
     <div id="masterWallet" >
 
@@ -44,7 +44,7 @@
 
         <wallet :all-coins="allCoins" :holding='totalHoldings'>
             {# <h3>Master Wallet</h3> #}
-            {# <chart class="bigchart"></chart> #}
+            <chart class="bigchart"></chart>
             <coinbox></coinbox>
             <totals></totals>
         </wallet>
@@ -57,8 +57,8 @@
                 {# <chart></chart> #}
                 <coinbox></coinbox>
             </wallet>
-
-            {# <wallet :all-coins="allCoins" :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
+ 
+            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
                 <h3>Wallet 2</h3>
                 <chart></chart>
                 <coinbox></coinbox>
@@ -81,10 +81,10 @@
                 <chart></chart>
                 <coinbox></coinbox>
             </wallet>
-             #}
+              
         </div> 
 
-
+ 
     </div>
 
 </main>

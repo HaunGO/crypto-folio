@@ -1,4 +1,4 @@
-
+import Vue from "vue/dist/vue.esm.js";
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 

@@ -1,4 +1,4 @@
-
+import Vue from "vue/dist/vue.esm.js";
 
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
@@ -26,7 +26,7 @@ Vue.component("totals", {
     this.setupEvents();
     // this.totalBTC(this.thisWallet);
   },
-
+ 
   methods: {
     setupEvents: function() {
     //   console.log("totals - methods - setupEvents");
@@ -50,4 +50,4 @@ Vue.component("totals", {
 });
 
 
-export default ''; 
+export default '';
