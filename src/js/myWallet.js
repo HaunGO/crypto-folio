@@ -3,10 +3,20 @@
 // var apiURL = 'https://api.github.com/repositories/11730342/commits?per_page=5&sha=';
 // var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
+
+import Vue from "vue/dist/vue.esm.js";
+import Vuex from "vuex";
+import Rx from "rxjs/Rx";
+import _ from "lodash";
+
+
+Vue.use(Vuex);
+
+
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
-import './component-jsonwallets.js';
+// import './component-jsonwallets.js';
 import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
@@ -35,7 +45,8 @@ var w = new Vue({
           globalMarketCap: 0,
           bitcoinDominance: 0,
           total24HrVolume: 0,
-          allCoins: null,
+        //   allCoin: [],
+          allCoins: [],
           bitcoinPrice: 0,
           thisWallet: null,
           masterWallet: null,
@@ -47,7 +58,7 @@ var w = new Vue({
         };
     },
 
-
+ 
 
     created: function() {
         console.log('primaryComponent created() ~~~~~~~~~');
@@ -85,10 +96,12 @@ var w = new Vue({
             Promise.all(promises).then(d => {
 
                 self.allCoins = d.reduce((acc, cur) => {
+                // self.$root.allCoins = d.reduce((acc, cur) => {
                     return acc.concat(cur);
                 }, [] );
 
                 self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
+                // self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.$root.allCoins);
 
                 console.log('data is available', self.masterWallet);
 
