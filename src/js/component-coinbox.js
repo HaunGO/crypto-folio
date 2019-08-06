@@ -33,3 +33,4 @@ Vue.component('coinbox', {
 
 
 export default '';
+ 

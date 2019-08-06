@@ -5,7 +5,6 @@ import myMixin from './mixins.js';
 Vue.component('wallet', {
     mixins: [myMixin],
     data: function () {
-
         return {
             myHoldingsTotalInUSD: 0,
             myHoldingsTotalInBTC: 0,
@@ -14,11 +13,11 @@ Vue.component('wallet', {
     },
     props: [ 'holding', 'allCoins', 'title' ],
     template:
-    `<div class="walletBox ma1 tc">
-        <slot></slot>
-        <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
-        <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
-    </div>`,
+        `<div class="walletBox ma1 tc">
+            <slot></slot>
+            <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
+            <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
+            </div>`,
   
     created () {
         // console.log('<wallet> component created');
@@ -33,7 +32,7 @@ Vue.component('wallet', {
     methods:{
         buildWallet(){
             // console.log('wallet.buildWallet() !!!', this.holding);
-
+            
             var useThis = this.holding;
 
             this.thisWallet = this.mixinBuildWallet(useThis, this.allCoins);

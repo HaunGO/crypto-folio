@@ -11,6 +11,7 @@ import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
+import './component-totals.js';
 
 
 
@@ -21,26 +22,29 @@ var w = new Vue({
 
     data: function () {
         return {
-            wallet:'wallet',
-            apies : [
-                    "https://api.coinmarketcap.com/v1/ticker/",
-                    "https://api.coinmarketcap.com/v1/ticker/dent/",
-                    "https://api.coinmarketcap.com/v1/ticker/pillar/",
-                    "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
-                    // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
-            ],
+          wallet: "wallet",
+          apies: [
+            "https://api.coinmarketcap.com/v1/ticker/",
+            "https://api.coinmarketcap.com/v1/ticker/dent/",
+            "https://api.coinmarketcap.com/v1/ticker/pillar/",
+            "https://api.coinmarketcap.com/v1/ticker/veritaseum/"
+            // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
+          ],
 
-            globalMarket : "https://api.coinmarketcap.com/v1/global/",
-            globalMarketCap: 0,
-            bitcoinDominance: 0,
-            total24HrVolume: 0,
-            allCoins: [],
-            bitcoinPrice: 0,
-            thisWallet: null,
-            masterWallet: null,
-            fetchTick: 0,
-            // descrete:true
-        }
+          globalMarket: "https://api.coinmarketcap.com/v1/global/",
+          globalMarketCap: 0,
+          bitcoinDominance: 0,
+          total24HrVolume: 0,
+          allCoins: null,
+          bitcoinPrice: 0,
+          thisWallet: null,
+          masterWallet: null,
+          fetchTick: 0,
+        //   myHoldingsTotalInUSD: 0,
+        //   myHoldingsTotalInBTC: 0,
+
+        //   descrete:true
+        };
     },
 
 
@@ -84,7 +88,7 @@ var w = new Vue({
                     return acc.concat(cur);
                 }, [] );
 
-                self.masterWallet = self.mixinBuildWallet(this.totalHoldings, self.allCoins);
+                self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
 
                 console.log('data is available', self.masterWallet);
 
@@ -96,6 +100,7 @@ var w = new Vue({
                 console.log('oops, something has gone wrong.', e);
             });
 
+            // console.log('? ', self.allCoins);
         },
 
 

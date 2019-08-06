@@ -23,10 +23,11 @@
 		"twig": { 
 		    "dist/index.html": "src/index.html.twig",
 		    "dist/a.html": "src/a.html.twig",
-		    "dist/b.html": "src/b.html.twig"
-		},
+		    "dist/b.html": "src/b.html.twig",
+		    "dist/for-dashboard.html": "src/for-dashboard.html.twig"
+		}, 
 		"browserSync": {
 			"server": "dist/"
 		}
 	}
-}
+} 
