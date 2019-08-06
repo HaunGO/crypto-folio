@@ -13,6 +13,29 @@ import _ from "lodash";
 Vue.use(Vuex);
 
 
+
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    allCoins: []
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    },
+    addAllCoins(state, coin) {
+        state.allCoins = coin;
+    }
+  }
+});
+// store.commit('increment')
+// console.log(store.state.count) // -> 1
+// store.commit('increment')
+// console.log(store.state.count) // -> 1
+// store.commit('increment')
+// console.log(store.state.count) // -> 1
+
+
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
@@ -37,7 +60,8 @@ var w = new Vue({
             "https://api.coinmarketcap.com/v1/ticker/",
             "https://api.coinmarketcap.com/v1/ticker/dent/",
             "https://api.coinmarketcap.com/v1/ticker/pillar/",
-            "https://api.coinmarketcap.com/v1/ticker/veritaseum/"
+            "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
+            "https://api.coinmarketcap.com/v1/ticker/substratum/",
             // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
           ],
 
@@ -45,16 +69,16 @@ var w = new Vue({
           globalMarketCap: 0,
           bitcoinDominance: 0,
           total24HrVolume: 0,
-        //   allCoin: [],
+            //   allCoin: [],
           allCoins: [],
           bitcoinPrice: 0,
           thisWallet: null,
           masterWallet: null,
           fetchTick: 0,
-        //   myHoldingsTotalInUSD: 0,
-        //   myHoldingsTotalInBTC: 0,
+            //   myHoldingsTotalInUSD: 0,
+            //   myHoldingsTotalInBTC: 0,
 
-        //   descrete:true
+            //   descrete:true
         };
     },
 
@@ -100,12 +124,15 @@ var w = new Vue({
                     return acc.concat(cur);
                 }, [] );
 
+                store.commit('addAllCoins', self.allCoins);
+
                 self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
                 // self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.$root.allCoins);
 
                 console.log('data is available', self.masterWallet);
-
+                
                 Vue.nextTick(function () {
+                    // console.log('?~~~~~~~ ', store.state.allCoins);
                     EventBus.$emit('on-data-has-loaded');
                 })
 
@@ -114,6 +141,7 @@ var w = new Vue({
             });
 
             // console.log('? ', self.allCoins);
+
         },
 
 

@@ -54,7 +54,7 @@ var myMixin = {
                 }
             })
         },
-
+        
         formatAsUSD: function(n){
             // console.log('formatAsUSD() ', n);
             return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
