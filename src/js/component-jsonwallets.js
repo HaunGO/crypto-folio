@@ -1,5 +1,8 @@
+import Vue from "vue/dist/vue.esm.js";
 import EventBus from "./eventBus.js";
 import myMixin from "./mixins.js";
+import store from "./store.js";
+
 
 Vue.component("jsonwallets", {
   mixins: [myMixin],
@@ -24,14 +27,14 @@ Vue.component("jsonwallets", {
                 <div v-for="wallets in walletJson" class="flex flex-row flex-wrap justify-center">
                   <div v-for="wallet in wallets" >
                     <wallet :all-coins="allCoins" :holding="wallet">
-						<h3>{{wallet}}</h3>
-						<chart></chart>
-		                <coinbox></coinbox>
+                      <h3>{{wallet}}</h3>
+                      <chart></chart>
+		                  <coinbox></coinbox>
                     </wallet>       
                   </div>
                 </div>
               </div>
-              `,
+            `,
 
   created() {
     console.log("<jsonwallet> component created");

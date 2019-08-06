@@ -3,47 +3,61 @@
 // var apiURL = 'https://api.github.com/repositories/11730342/commits?per_page=5&sha=';
 // var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
 
+ 
+import Vue from "vue/dist/vue.esm.js";
+// import Vuex from "vuex";
+// import Rx from "rxjs/Rx";
+import _ from "lodash";
+
+
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
+import store from "./store.js";
 
 import './component-jsonwallets.js';
 import './component-wallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
+import './component-totals.js';
 
-
+  
 
 var w = new Vue({
     el: '#masterWallet',
     delimiters: ['${', '}'],
     mixins: [myMixin],
-
+    store: store,
     data: function () {
         return {
-            wallet:'wallet',
-            apies : [
-                    "https://api.coinmarketcap.com/v1/ticker/",
-                    "https://api.coinmarketcap.com/v1/ticker/dent/",
-                    "https://api.coinmarketcap.com/v1/ticker/pillar/",
-                    "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
-                    // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
-            ],
+          wallet: "wallet",
+          apies: [
+            "https://api.coinmarketcap.com/v1/ticker/",
+            "https://api.coinmarketcap.com/v1/ticker/dent/",
+            "https://api.coinmarketcap.com/v1/ticker/pillar/",
+            "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
+            "https://api.coinmarketcap.com/v1/ticker/substratum/",
+            // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
+          ],
 
-            globalMarket : "https://api.coinmarketcap.com/v1/global/",
-            globalMarketCap: 0,
-            bitcoinDominance: 0,
-            total24HrVolume: 0,
-            allCoins: [],
-            bitcoinPrice: 0,
-            thisWallet: null,
-            masterWallet: null,
-            fetchTick: 0,
-            // descrete:true
-        }
+          globalMarket: "https://api.coinmarketcap.com/v1/global/",
+          globalMarketCap: 0,
+          bitcoinDominance: 0,
+          total24HrVolume: 0,
+            //   allCoin: [],
+          allCoins: [],
+          bitcoinPrice: 0,
+          thisWallet: null,
+          masterWallet: null,
+          fetchTick: 0,
+            //   myHoldingsTotalInUSD: 0,
+            //   myHoldingsTotalInBTC: 0,
+
+            //   descrete:true
+        };
     },
 
-
+ 
 
     created: function() {
         console.log('primaryComponent created() ~~~~~~~~~');
@@ -81,20 +95,29 @@ var w = new Vue({
             Promise.all(promises).then(d => {
 
                 self.allCoins = d.reduce((acc, cur) => {
+                // self.$root.allCoins = d.reduce((acc, cur) => {
                     return acc.concat(cur);
                 }, [] );
 
-                self.masterWallet = self.mixinBuildWallet(this.totalHoldings, self.allCoins);
+                store.commit('addAllCoins', self.allCoins);
+
+                self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
+                // self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.$root.allCoins);
 
                 console.log('data is available', self.masterWallet);
-
+                
                 Vue.nextTick(function () {
-                    EventBus.$emit('on-data-has-loaded');
+                // console.log( "?~~~~~~~ ", sthis.$store.getters.allCoins );
+                    EventBus.$emit(
+                        "on-data-has-loaded"
+                    );
                 })
 
             }).catch(e => {
                 console.log('oops, something has gone wrong.', e);
             });
+
+            // console.log('? ', self.allCoins);
 
         },
 

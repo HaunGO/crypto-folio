@@ -1,13 +1,15 @@
+// import store from "./store.js";
 
 
 var myMixin = {
 
     data: function () {
         return {
-            myWallet: [],
-            bitcoinPrice: 0,
-            totalHoldings: {},
-        }
+          myWallet: [],
+          bitcoinPrice: 0,
+          totalHoldings: {},
+        //   allCoins: [],
+        };
     },
 
     computed: {
@@ -28,7 +30,7 @@ var myMixin = {
         mixinBuildWallet: function(_myCoins, _allCoins) {
             // console.log('mixinBuildWallet()()()()');
             // console.log('mixinBuildWallet', _myCoins, _allCoins);
-            console.log('mixinBuildWallet', _allCoins);
+            // console.log('mixinBuildWallet', _allCoins);
             // console.log('mixinBuildWallet() ', _myCoins);
            
             return _allCoins.filter(coin => {
@@ -46,7 +48,8 @@ var myMixin = {
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){
             // console.log('filterCoin() ', x);
-            var arr = this.allCoins.slice();
+            // var arr = this.allCoins.slice();
+            var arr = this.$store.getters.allCoins.slice();
             return arr.filter(function(coin) {
                 if(coin.symbol === x){
                     return coin.symbol.indexOf(x) > -1;
@@ -127,10 +130,17 @@ var myMixin = {
         },
 
         totalBTC: function(_thisWallet_){
-            // console.log('totalBTC()');
+            // console.log('totalBTC() 1');
+            // console.log("this.bitcoinPrice ", this.bitcoinPrice);
+            // console.log( "this.filterCoin(BTC)[0].price_usd ", this.bitcoinPrice );
+            
             this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
+            // console.log('totalBTC() 2');
             let n = Number(this.myHoldingsTotalInUSD) / Number(this.bitcoinPrice) ;
+            // console.log('totalBTC() 3');
             this.myHoldingsTotalInBTC = n.toFixed(6);
+            // console.log('totalBTC() 4');
+            // console.log( "this ", this.myHoldingsTotalInBTC );
         }
     }
 }
