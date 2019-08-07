@@ -23,7 +23,7 @@ import './component-totals.js';
 
   
 
-var w = new Vue({
+var masterWallet = new Vue({
     el: '#masterWallet',
     delimiters: ['${', '}'],
     mixins: [myMixin],
@@ -107,7 +107,7 @@ var w = new Vue({
                 console.log('data is available', self.masterWallet);
                 
                 Vue.nextTick(function () {
-                // console.log( "?~~~~~~~ ", sthis.$store.getters.allCoins );
+                // console.log( "?~~~~~~~ ", this.$store.getters.allCoins );
                     EventBus.$emit(
                         "on-data-has-loaded"
                     );

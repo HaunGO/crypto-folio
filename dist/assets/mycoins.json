@@ -2,14 +2,18 @@
 
 {
     "wallets": {
-        "one":  {
+        "One":  {
                     "BTC": 0.01,
                     "LTC": 0.875
                 },
 
-        "two": {
+        "Two": {
                     "EOS": 9,
                     "ADA": 505
+                },
+        "Han Solo": {
+                    "THETA": 1000,
+                    "VERI": 10
                 }
     }
 }

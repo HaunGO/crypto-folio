@@ -63,40 +63,48 @@
         </div>
 
 
-        <wallet :all-coins="allCoins" :holding='totalHoldings'>
+        <wallet :holding='totalHoldings'>
             <h3>Master Wallet</h3>
             <chart class="bigchart"></chart>
+            <totals></totals>
             <coinbox></coinbox>
         </wallet>
 
 
         <div class="flex flex-row flex-wrap justify-center">
 
-            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.015, "LTC":1}'>
+            <wallet :holding='{ "BTC": 0.015, "LTC":1}'>
                 <h3>Wallet 1</h3>
                 <chart></chart>
+                <totals></totals>
                 <coinbox></coinbox>
             </wallet>
 
-            <wallet :all-coins="allCoins" :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
+            <wallet :holding='{ "BTC": 0.02, "ETH": 0.2, "EOS": 10 }' >
                 <h3>Wallet 2</h3>
                 <chart></chart>
+                <totals></totals>
                 <coinbox></coinbox>
             </wallet>
 
-            <wallet :all-coins="allCoins" :holding='{ "THETA": 500, "DGB": 3000 }'>
+            <wallet :holding='{ "THETA": 500, "DGB": 3000 }'>
                 <h3>Wallet 3</h3>
+                <chart></chart>
+                <totals></totals>
                 <coinbox></coinbox>
-            </wallet>
+        </wallet>
 
-            <wallet :all-coins="allCoins" :holding='{ "VERI": 1, "PPT": 1, "SUB":100000}'>
+            <wallet :holding='{ "VERI": 1, "PPT": 1, "SUB":100000}'>
                 <h3>Wallet 4</h3>
                 <chart></chart>
+                <totals></totals>
+                <coinbox></coinbox>
             </wallet>
 
-            <wallet :all-coins="allCoins" :holding='{ "DGB": 60000, "PPT": 20 }'>
+            <wallet :holding='{ "DGB": 60000, "PPT": 20 }'>
                 <h3>:)</h3>
                 <chart></chart>
+                <totals></totals>
                 <coinbox></coinbox>
             </wallet>
 

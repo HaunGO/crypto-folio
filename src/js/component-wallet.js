@@ -13,7 +13,8 @@ Vue.component('wallet', {
             thisWallet: null,
         }
     },
-    props: [ 'holding', 'allCoins', 'title' ],
+    // props: [ 'holding', 'allCoins', 'title' ],
+    props: [ 'holding', 'title' ],
     template:
             `<div class="walletBox ma1 tc">
                 <slot></slot>
@@ -37,7 +38,10 @@ Vue.component('wallet', {
             
             var useThis = this.holding;
 
-            this.thisWallet = this.mixinBuildWallet(useThis, this.allCoins);
+            this.thisWallet = this.mixinBuildWallet(
+                useThis,
+                this.$store.getters.allCoins
+            );
 
             this.totalUSD(this.thisWallet);
             this.totalBTC(this.thisWallet);

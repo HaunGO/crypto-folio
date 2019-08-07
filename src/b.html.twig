@@ -9,7 +9,7 @@
 
     <div id="masterWallet" >
 
-        <wallet :all-coins="allCoins" :holding='totalHoldings'>
+        <wallet :holding='totalHoldings'>
             <h3>Master Wallet B</h3>
             <chart class="bigchart"></chart>
             <coinbox></coinbox>
@@ -21,7 +21,7 @@
             <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
         </div>
 
-        <jsonwallets :all-coins="allCoins" data-jsonholding="./assets/mycoins.json" ></jsonwallets>
+        <jsonwallets data-jsonholding="./assets/mycoins.json" ></jsonwallets>
 
     </div>
 
