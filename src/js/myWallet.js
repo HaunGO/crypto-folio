@@ -2,14 +2,14 @@
 
 // var apiURL = 'https://api.github.com/repositories/11730342/commits?per_page=5&sha=';
 // var apiURL = 'https://api.coinmarketcap.com/v1/ticker/';
-
+ 
  
 import Vue from "vue/dist/vue.esm.js";
 // import Vuex from "vuex";
 // import Rx from "rxjs/Rx";
 import _ from "lodash";
 
-
+ 
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 import store from "./store.js";
@@ -22,6 +22,7 @@ import './component-chart.js';
 import './component-totals.js';
 
   
+// https://pro.coinmarketcap.com/migrate/
 
 var masterWallet = new Vue({
     el: '#masterWallet',

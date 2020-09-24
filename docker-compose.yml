@@ -1,0 +1,67 @@
+version: "3.5"
+x-definitions:
+  proxy-networks: &proxy-networks
+    - default
+    - traefik
+  dependencies: &dependencies
+    - db
+    - redis
+networks:
+  traefik:
+    external: true
+services:
+  web:
+    image: tombras/azure-php:7.3.7-apache-xdebug
+    networks: *proxy-networks
+    labels:
+      traefik.port: 8080
+      traefik.frontend.rule: HostRegexp:$DOCKER_HOSTNAME.tombrasweb.com, {host:$DOCKER_HOSTNAME.*.*.*.*.xip.io}
+    depends_on: *dependencies
+    ports:
+      - ${DOCKER_HTTP_PORT}:8080
+      - ${DOCKER_HTTPS_PORT}:443
+    volumes:
+      - .:/var/www/html:cached
+      # create a local.ini and uncomment line below to add local dev configurations to php
+      # - ./local.ini:/usr/local/etc/php/conf.d/docker-local.ini
+      - /var/www/html/.git
+      - /var/www/html/docker-persistent-data
+    environment:
+      DB_NAME: ${DOCKER_DB_NAME}
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_HOST: db:3306
+      DB_HOSTNAME: db
+      DB_PORT: 3306
+      WP_REDIS_HOST: redis
+      ACF_SHOW_ADMIN: 1
+      LOCAL_ENV: 1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    networks: *proxy-networks
+    labels:
+      traefik.frontend.rule: Host:pma-${DOCKER_HOSTNAME}.tombrasweb.com
+    depends_on: *dependencies
+    ports:
+      - ${DOCKER_PMA_PORT}:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+  redis:
+    image: redis:3.2
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./docker-persistent-data/mysql-data:/var/lib/mysql:cached
+      # - ./docker-persistent-data/mysql-logs:/var/log/mysql:cached
+      # you can pass in conf files
+      # - ./docker-persistent-data/mysql.cnf:/etc/mysql/mysql.conf.d/extended.cnf
+      # Load data from local SQL file
+      # - ./local.sql:/docker-entrypoint-initdb.d/initial.sql
+    # ports:
+    #   - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DOCKER_DB_NAME}

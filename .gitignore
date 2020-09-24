@@ -1,3 +1,8 @@
 node_modules
 dist/a.html 
+dist/for-dashboard.html
 src/a.html.twig
+/docker-persistent-data*
+.cache-loader
+node_modules/.cache
+/*.ini

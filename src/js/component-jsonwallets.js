@@ -46,7 +46,7 @@ Vue.component("jsonwallets", {
         // console.log(this.$refs.jsonwallet.dataset.jsonholding);
         // console.log(this.$el.dataset.jsonholding);
     },
-
+    
     mounted() {
         // console.log("~~mounted()", this.$el.dataset.jsonholding);
         this.loadJSON(this.$el.dataset.jsonholding);

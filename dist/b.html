@@ -56,17 +56,17 @@
 
     <div id="masterWallet" >
 
-        <wallet :holding='totalHoldings'>
-            <h3>Master Wallet B</h3>
-            <chart class="bigchart"></chart>
-            <coinbox></coinbox>
-        </wallet>
-
         <div class="mv4 tc">
             <div class="">MarketCap: <strong>$${globalMarketCap}</strong></div>
             <div class="">24/hr Volume: <strong>${total24HrVolume}</strong></div>
             <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
         </div>
+
+        <wallet :holding='totalHoldings'>
+            <h3>Master Wallet B</h3>
+            <chart class="bigchart"></chart>
+            <coinbox></coinbox>
+        </wallet>
 
         <jsonwallets data-jsonholding="./assets/mycoins.json" ></jsonwallets>
 
