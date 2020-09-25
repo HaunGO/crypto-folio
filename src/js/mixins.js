@@ -22,7 +22,12 @@ var myMixin = {
 
     filters:{
         formatUSD: function(n){
-            return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            let num = (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            // if the amount is less than $0.10, add an extra decimal point.
+            if (num < 0.10){
+                num = (n*1).toFixed(3).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'); 
+            }
+            return num;
         }
     },
 
@@ -30,8 +35,8 @@ var myMixin = {
         mixinBuildWallet: function(_myCoins, _allCoins) {
             // console.log('mixinBuildWallet()()()()');
             // console.log('mixinBuildWallet', _myCoins, _allCoins);
-            console.log('mixinBuildWallet() _allCoins', _allCoins);
-            console.log('mixinBuildWallet() _myCoins ', _myCoins);
+            // console.log('mixinBuildWallet() _allCoins', _allCoins);
+            // console.log('mixinBuildWallet() _myCoins ', _myCoins);
            
             return _allCoins.filter(coin => {
                 return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
@@ -48,19 +53,21 @@ var myMixin = {
 
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){
-            // console.log('filterCoin() ', x);
-            // var arr = this.allCoins.slice();
-            var arr = this.$store.getters.allCoins.slice();
+            var arr = this.$store.getters.allCoins.slice();            
             return arr.filter(function(coin) {
                 if(coin.symbol === x){
                     return coin.symbol.indexOf(x) > -1;
                 }
             })
-        },
+        }, 
 
         formatAsUSD: function(n){
-            // console.log('formatAsUSD() ', n);
-            return (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            let num = (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            // if the amount is less than $0.10, add an extra decimal point.
+            if (num < 0.10) {
+                num = (n*1).toFixed(3).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            }
+            return num;
         },
 
         // THIS CREATES THE APPROPRIATE CLASSNAME FOR THE ICON
@@ -134,14 +141,20 @@ var myMixin = {
             // console.log('totalBTC() 1');
             // console.log("this.bitcoinPrice ", this.bitcoinPrice);
             // console.log( "this.filterCoin(BTC)[0].price_usd ", this.bitcoinPrice );
+            // console.log('_thisWallet_ ', _thisWallet_);
+
+
+            // this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
+            this.bitcoinPrice = this.filterCoin("BTC")[0].quote.USD.price;
             
-            this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
-            // console.log('totalBTC() 2');
+            
+            // console.log('totalBTC() 2', this.bitcoinPrice);
             let n = Number(this.myHoldingsTotalInUSD) / Number(this.bitcoinPrice) ;
             // console.log('totalBTC() 3');
+            // this.myHoldingsTotalInBTC = n.toFixed(6);
             this.myHoldingsTotalInBTC = n.toFixed(6);
             // console.log('totalBTC() 4');
-            // console.log( "this ", this.myHoldingsTotalInBTC );
+            // console.log( "totalBTC() ", this.myHoldingsTotalInBTC );
         }
     }
 }

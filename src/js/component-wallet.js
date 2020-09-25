@@ -37,7 +37,7 @@ Vue.component('wallet', {
             // console.log('wallet.buildWallet() !!!', this.holding);
             
             var useThis = this.holding;
-
+            
             this.thisWallet = this.mixinBuildWallet(
                 useThis,
                 this.$store.getters.allCoins
@@ -50,7 +50,6 @@ Vue.component('wallet', {
 
             //  console.log( store.state.allCoins );
             // console.log("!@!@!@!@!@! ", this.$store.getters.allCoins);
-
 
         },
 

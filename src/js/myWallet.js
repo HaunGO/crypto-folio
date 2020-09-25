@@ -155,8 +155,6 @@ var masterWallet = new Vue({
                 .catch(console.error)
 
 
-
-
             // this.CMC.getTickers({ limit: 3 }).then(console.log).catch(console.error)
             // this.CMC.getTickers({ convert: 'EUR' }).then(console.log).catch(console.error)
             // this.CMC.getTickers({ start: 0, limit: 5 }).then(console.log).catch(console.error)
@@ -187,51 +185,49 @@ var masterWallet = new Vue({
 
         },
 
-        fetchData: function(){
+        // fetchData: function(){
 
-            var self = this;
+        //     var self = this;
 
-            let status = (r) => {
-                if (r.ok) {
-                    return r;
-                } else {
-                    throw new Error(r.statusText);
-                }
-            }
+        //     let status = (r) => {
+        //         if (r.ok) {
+        //             return r;
+        //         } else {
+        //             throw new Error(r.statusText);
+        //         }
+        //     }
 
-            let _json = (r) => r.json();
+        //     let _json = (r) => r.json();
 
-            let promises = self.apies.map(url => {
-                return fetch(url).then(_json)
-            });
+        //     let promises = self.apies.map(url => {
+        //         return fetch(url).then(_json)
+        //     });
 
-            Promise.all(promises).then(d => {
+        //     Promise.all(promises).then(d => {
 
-                self.allCoins = d.reduce((acc, cur) => {
-                    return acc.concat(cur);
-                }, [] );
+        //         self.allCoins = d.reduce((acc, cur) => {
+        //             return acc.concat(cur);
+        //         }, [] );
 
-                store.commit('addAllCoins', self.allCoins);
+        //         store.commit('addAllCoins', self.allCoins);
 
-                self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
+        //         self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
 
-                console.log('data is available', self.masterWallet);
+        //         console.log('data is available', self.masterWallet);
                 
-                Vue.nextTick(function () {
-                    EventBus.$emit(
-                        "on-data-has-loaded"
-                    );
-                })
+        //         Vue.nextTick(function () {
+        //             EventBus.$emit(
+        //                 "on-data-has-loaded"
+        //             );
+        //         })
 
-            }).catch(e => {
-                console.log('oops, something has gone wrong.', e);
-            });
+        //     }).catch(e => {
+        //         console.log('oops, something has gone wrong.', e);
+        //     });
 
-            // console.log('? ', self.allCoins);
+        //     // console.log('? ', self.allCoins);
 
-        },
-
-
+        // },
 
 
 
@@ -239,37 +235,39 @@ var masterWallet = new Vue({
 
 
 
-        fetchGlobalData: function(){
-            var self = this;
-
-            // fetch(self.globalMarket)
-                // .then(function(response) {
-                    // return response.json();
-                // })
-                // .then(function(myJSON) {
-                    // self.bitcoinDominance = myJSON.bitcoin_percentage_of_market_cap;
-                    // self.total24HrVolume = self.wordifyNumber(myJSON.total_24h_volume_usd);
-                    // self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
 
 
-                    self.bitcoinDominance = 99;
-                    self.total24HrVolume = 12;
-                    self.globalMarketCap = 14;
+        // fetchGlobalData: function(){
+        //     var self = this;
 
-                    this.CMC.getGlobal()
-                        .then(function(response) {
-                            console.log(response);
-                            self.bitcoinDominance = response.data.btc_dominance;
-                            self.globalMarketCap = self.wordifyNumber(response.data.quote.USD.total_market_cap);
-                            self.total24HrVolume = self.wordifyNumber(response.data.quote.USD.total_volume_24h);
-                        })
-                        .catch(console.error)
+        //     // fetch(self.globalMarket)
+        //         // .then(function(response) {
+        //             // return response.json();
+        //         // })
+        //         // .then(function(myJSON) {
+        //             // self.bitcoinDominance = myJSON.bitcoin_percentage_of_market_cap;
+        //             // self.total24HrVolume = self.wordifyNumber(myJSON.total_24h_volume_usd);
+        //             // self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
+
+
+        //             self.bitcoinDominance = 99;
+        //             self.total24HrVolume = 12;
+        //             self.globalMarketCap = 14;
+
+        //             this.CMC.getGlobal()
+        //                 .then(function(response) {
+        //                     console.log(response);
+        //                     self.bitcoinDominance = response.data.btc_dominance;
+        //                     self.globalMarketCap = self.wordifyNumber(response.data.quote.USD.total_market_cap);
+        //                     self.total24HrVolume = self.wordifyNumber(response.data.quote.USD.total_volume_24h);
+        //                 })
+        //                 .catch(console.error)
                     
-                // });
+        //         // });
 
-            // self.fetchTick++;
+        //     // self.fetchTick++;
 
-        }
+        // }
 
 
 
