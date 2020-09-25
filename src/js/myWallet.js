@@ -21,9 +21,64 @@ import './component-coin.js';
 import './component-chart.js';
 import './component-totals.js';
 
-  
-// https://pro.coinmarketcap.com/migrate/
 
+console.log('!@!@!@!@!@!@!@!@!@!@!@!@!');
+
+
+
+const CoinMarketCap = require('coinmarketcap-api')
+
+// const apiKey = '22143f4a-7418-45df-8a03-ae32f6dc8748'
+// const client = new CoinMarketCap(apiKey)
+
+
+
+// 22143f4a-7418-45df-8a03-ae32f6dc8748
+// https://undefined/v1/cryptocurrency/listings/latest
+// https://pro-api.coinmarketcap.com
+
+// uri: 'https://undefined/v1/cryptocurrency/listings/latest',
+//DEPRICATED: 
+// // const rp = require('request-promise');
+// const requestOptions = {
+//     method: 'GET',
+//     uri: 'https://pro-api.coinmarketcap.com',
+//     qs: {
+//         'start': '1',
+//         'limit': '5000',
+//         'convert': 'USD'
+//     },
+//     headers: {
+//         'X-CMC_PRO_API_KEY': '22143f4a-7418-45df-8a03-ae32f6dc8748'
+//     },
+//     json: true,
+//     gzip: true
+// };
+
+// rp(requestOptions).then(response => {
+//     console.log('API call response:', response);
+// }).catch((err) => {
+//     console.log('API call error:', err.message);
+// });
+
+
+
+
+// client.getTickers().then(console.log).catch(console.error)
+// client.getGlobal().then(console.log).catch(console.error)
+
+// client.getQuotes({ symbol: ['BTC', 'ETH', 'DGB'] }).then(console.log).catch(console.error)
+
+
+// fetch("https://pro-api.coinmarketcap.com", requestOptions)
+//     .then(function (response) {
+//         return response.json();
+//     })
+//     .then(function (myJSON) { 
+//         console.log(myJSON);
+//     });
+ 
+   
 var masterWallet = new Vue({
     el: '#masterWallet',
     delimiters: ['${', '}'],
@@ -33,15 +88,16 @@ var masterWallet = new Vue({
         return {
           wallet: "wallet",
           apies: [
-            "https://api.coinmarketcap.com/v1/ticker/",
-            "https://api.coinmarketcap.com/v1/ticker/dent/",
-            "https://api.coinmarketcap.com/v1/ticker/pillar/",
-            "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
-            "https://api.coinmarketcap.com/v1/ticker/substratum/",
+            // "https://api.coinmarketcap.com/v1/ticker/",
+            // "https://api.coinmarketcap.com/v1/ticker/dent/",
+            // "https://api.coinmarketcap.com/v1/ticker/pillar/",
+            // "https://api.coinmarketcap.com/v1/ticker/veritaseum/",
+            // "https://api.coinmarketcap.com/v1/ticker/substratum/",
             // "https://api.coinmarketcap.com/v1/ticker/theta-token/",
           ],
 
-          globalMarket: "https://api.coinmarketcap.com/v1/global/",
+        //   globalMarket: "https://api.coinmarketcap.com/v1/global/",
+          globalMarket: "pro-api.coinmarketcap.com",
           globalMarketCap: 0,
           bitcoinDominance: 0,
           total24HrVolume: 0,
@@ -55,6 +111,11 @@ var masterWallet = new Vue({
             //   myHoldingsTotalInBTC: 0,
 
             //   descrete:true
+
+            cmcApiKey: '22143f4a-7418-45df-8a03-ae32f6dc8748',
+            // coinMarketCap = new CoinMarketCap(cmcApiKey)
+            CMC: null,
+
         };
     },
 
@@ -62,18 +123,69 @@ var masterWallet = new Vue({
 
     created: function() {
         console.log('primaryComponent created() ~~~~~~~~~');
+        this.CMC = new CoinMarketCap(this.cmcApiKey);
     },
 
 
 
     mounted: function(){
-        this.fetchData();
-        this.fetchGlobalData();
+        // this.fetchGlobalData();
+        // this.fetchData();
+        this.fetchData2();
     },
 
 
 
     methods: {
+
+        fetchData2: function(){
+            var self = this;
+
+            self.bitcoinDominance = 99;
+            self.total24HrVolume = 12;
+            self.globalMarketCap = 14;
+
+            this.CMC.getGlobal()
+                .then(function (response) {
+                    console.log('getGlobal() ',response);
+                    self.bitcoinDominance = response.data.btc_dominance;
+                    self.globalMarketCap = self.wordifyNumber(response.data.quote.USD.total_market_cap);
+                    self.total24HrVolume = self.wordifyNumber(response.data.quote.USD.total_volume_24h);
+                })
+                .catch(console.error)
+
+
+
+
+            // this.CMC.getTickers({ limit: 3 }).then(console.log).catch(console.error)
+            // this.CMC.getTickers({ convert: 'EUR' }).then(console.log).catch(console.error)
+            // this.CMC.getTickers({ start: 0, limit: 5 }).then(console.log).catch(console.error)
+            // this.CMC.getTickers({ sort: 'name' }).then(console.log).catch(console.error)            
+            this.CMC.getTickers()
+                .then(function (response) {
+                    self.allCoins = response.data;
+                    console.log('allCoins ', self.allCoins);
+
+
+
+                    store.commit('addAllCoins', self.allCoins);
+                    self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
+                    console.log('data is available', self.masterWallet);
+
+                    Vue.nextTick(function () {
+                        EventBus.$emit(
+                            "on-data-has-loaded"
+                        );
+                    })
+
+
+
+
+
+                })
+                .catch(console.error)
+
+        },
 
         fetchData: function(){
 
@@ -96,19 +208,16 @@ var masterWallet = new Vue({
             Promise.all(promises).then(d => {
 
                 self.allCoins = d.reduce((acc, cur) => {
-                // self.$root.allCoins = d.reduce((acc, cur) => {
                     return acc.concat(cur);
                 }, [] );
 
                 store.commit('addAllCoins', self.allCoins);
 
                 self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
-                // self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.$root.allCoins);
 
                 console.log('data is available', self.masterWallet);
                 
                 Vue.nextTick(function () {
-                // console.log( "?~~~~~~~ ", this.$store.getters.allCoins );
                     EventBus.$emit(
                         "on-data-has-loaded"
                     );
@@ -133,17 +242,32 @@ var masterWallet = new Vue({
         fetchGlobalData: function(){
             var self = this;
 
-            fetch(self.globalMarket)
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(myJSON) {
-                    self.bitcoinDominance = myJSON.bitcoin_percentage_of_market_cap;
-                    self.total24HrVolume = self.wordifyNumber(myJSON.total_24h_volume_usd);
-                    self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
-                });
+            // fetch(self.globalMarket)
+                // .then(function(response) {
+                    // return response.json();
+                // })
+                // .then(function(myJSON) {
+                    // self.bitcoinDominance = myJSON.bitcoin_percentage_of_market_cap;
+                    // self.total24HrVolume = self.wordifyNumber(myJSON.total_24h_volume_usd);
+                    // self.globalMarketCap = self.wordifyNumber(myJSON.total_market_cap_usd);
 
-            self.fetchTick++;
+
+                    self.bitcoinDominance = 99;
+                    self.total24HrVolume = 12;
+                    self.globalMarketCap = 14;
+
+                    this.CMC.getGlobal()
+                        .then(function(response) {
+                            console.log(response);
+                            self.bitcoinDominance = response.data.btc_dominance;
+                            self.globalMarketCap = self.wordifyNumber(response.data.quote.USD.total_market_cap);
+                            self.total24HrVolume = self.wordifyNumber(response.data.quote.USD.total_volume_24h);
+                        })
+                        .catch(console.error)
+                    
+                // });
+
+            // self.fetchTick++;
 
         }
 

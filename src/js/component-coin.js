@@ -15,9 +15,9 @@ Vue.component('coin', {
                 <div class="">$\{{ coin.holding_value | formatUSD }}</div>
     <hr>
                 <div class="f5 mt2" >$\{{ coin.price_usd }} </div>
-                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.percent_change_1h<0, 'dark-green': coin.percent_change_1h>0 }" >1h {{ coin.percent_change_1h }}% </div>
-                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.percent_change_24h<0, 'dark-green': coin.percent_change_24h>0 }" >1d {{ coin.percent_change_24h }}% </div>
-                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.percent_change_7d<0, 'dark-green': coin.percent_change_7d>0 }" >1w {{ coin.percent_change_7d }}% </div>
+                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.quote.USD.percent_change_1h<0, 'dark-green': coin.quote.USD.percent_change_1h>0 }" >1h {{ coin.quote.USD.percent_change_1h }}% </div>
+                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.quote.USD.percent_change_24h<0, 'dark-green': coin.quote.USD.percent_change_24h>0 }" >1d {{ coin.quote.USD.percent_change_24h }}% </div>
+                <div class="f7 tl" v-bind:class="{ 'dark-red': coin.quote.USD.percent_change_7d<0, 'dark-green': coin.quote.USD.percent_change_7d>0 }" >1w {{ coin.quote.USD.percent_change_7d }}% </div>
 
             </div>
         </div>`,

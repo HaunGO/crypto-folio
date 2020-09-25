@@ -30,15 +30,16 @@ var myMixin = {
         mixinBuildWallet: function(_myCoins, _allCoins) {
             // console.log('mixinBuildWallet()()()()');
             // console.log('mixinBuildWallet', _myCoins, _allCoins);
-            // console.log('mixinBuildWallet', _allCoins);
-            // console.log('mixinBuildWallet() ', _myCoins);
+            console.log('mixinBuildWallet() _allCoins', _allCoins);
+            console.log('mixinBuildWallet() _myCoins ', _myCoins);
            
             return _allCoins.filter(coin => {
                 return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
             }).map(c => {
                 return Object.assign({}, c, {
                     holding: _myCoins[c.symbol],
-                    holding_value: c.price_usd * (_myCoins[c.symbol])
+                    // holding_value: c.price_usd * (_myCoins[c.symbol])
+                    holding_value: c.quote.USD.price * (_myCoins[c.symbol])
                 });
             }).sort((a, b) => {
                 return a.holding_value - b.holding_value;
