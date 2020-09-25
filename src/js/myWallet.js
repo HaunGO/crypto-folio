@@ -164,8 +164,6 @@ var masterWallet = new Vue({
                     self.allCoins = response.data;
                     console.log('allCoins ', self.allCoins);
 
-
-
                     store.commit('addAllCoins', self.allCoins);
                     self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
                     console.log('data is available', self.masterWallet);

@@ -32,7 +32,7 @@ Vue.component('chart', {
         },
 
         buildChart: function(_thisWallet_){
-            console.log("~! component-chart : buildChart(){} ", _thisWallet_);
+            // console.log("~! component-chart : buildChart(){} ", _thisWallet_);
             var chartDiv = this.$refs.chart;
             var chartData = [];
 

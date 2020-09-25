@@ -1,8 +1,6 @@
 import Vue from "vue/dist/vue.esm.js";
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
-// import store from "./store.js";
-
 
 Vue.component('wallet', {
     mixins: [myMixin],
@@ -13,46 +11,31 @@ Vue.component('wallet', {
             thisWallet: null,
         }
     },
-    // props: [ 'holding', 'allCoins', 'title' ],
     props: [ 'holding', 'title' ],
     template:
             `<div class="walletBox ma1 tc">
                 <slot></slot>
             </div>`,
-            // <div class="">{{ myHoldingsTotalInBTC }} BTC</div>            
-            // <div class="">$\{{ myHoldingsTotalInUSD | formatUSD }}</div>
   
     created () {
-        // console.log('<wallet> component created');
         EventBus.$on('on-data-has-loaded', this.buildWallet );
-        // console.log('holding ', this.holding);
- 
+        
         // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
         this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
     },
     methods:{
-        buildWallet(){
-            // console.log('wallet.buildWallet() !!!', this.holding);
-            
+        buildWallet(){            
             var useThis = this.holding;
-            
             this.thisWallet = this.mixinBuildWallet(
                 useThis,
                 this.$store.getters.allCoins
             );
-
             this.totalUSD(this.thisWallet);
             this.totalBTC(this.thisWallet);
-
             EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
-
-            //  console.log( store.state.allCoins );
-            // console.log("!@!@!@!@!@! ", this.$store.getters.allCoins);
-
         },
-
 
         /* USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.  */
         mergeHoldings(o1, o2) {

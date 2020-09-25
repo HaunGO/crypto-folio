@@ -1,6 +1,3 @@
-// import store from "./store.js";
-
-
 var myMixin = {
 
     data: function () {
@@ -8,7 +5,6 @@ var myMixin = {
           myWallet: [],
           bitcoinPrice: 0,
           totalHoldings: {},
-        //   allCoins: [],
         };
     },
 
@@ -33,17 +29,13 @@ var myMixin = {
 
     methods: {
         mixinBuildWallet: function(_myCoins, _allCoins) {
-            // console.log('mixinBuildWallet()()()()');
-            // console.log('mixinBuildWallet', _myCoins, _allCoins);
-            // console.log('mixinBuildWallet() _allCoins', _allCoins);
-            // console.log('mixinBuildWallet() _myCoins ', _myCoins);
-           
+            // console.log('_myCoins ', _myCoins);
             return _allCoins.filter(coin => {
+                // console.log('!@!@!@!@!! ', Object.keys(_myCoins).indexOf(coin.symbol));
                 return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
             }).map(c => {
                 return Object.assign({}, c, {
                     holding: _myCoins[c.symbol],
-                    // holding_value: c.price_usd * (_myCoins[c.symbol])
                     holding_value: c.quote.USD.price * (_myCoins[c.symbol])
                 });
             }).sort((a, b) => {
@@ -60,7 +52,7 @@ var myMixin = {
                 }
             })
         }, 
-
+ 
         formatAsUSD: function(n){
             let num = (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
             // if the amount is less than $0.10, add an extra decimal point.
@@ -129,36 +121,18 @@ var myMixin = {
         },
 
         totalUSD: function(_thisWallet_){
-            // console.log('totalUSD()');
             var N = _thisWallet_.reduce( (total, c) => {
                 return total + c.holding_value;
             }, 0)
-
             this.myHoldingsTotalInUSD = N;
         },
 
         totalBTC: function(_thisWallet_){
-            // console.log('totalBTC() 1');
-            // console.log("this.bitcoinPrice ", this.bitcoinPrice);
-            // console.log( "this.filterCoin(BTC)[0].price_usd ", this.bitcoinPrice );
-            // console.log('_thisWallet_ ', _thisWallet_);
-
-
-            // this.bitcoinPrice = this.filterCoin("BTC")[0].price_usd;
             this.bitcoinPrice = this.filterCoin("BTC")[0].quote.USD.price;
-            
-            
-            // console.log('totalBTC() 2', this.bitcoinPrice);
             let n = Number(this.myHoldingsTotalInUSD) / Number(this.bitcoinPrice) ;
-            // console.log('totalBTC() 3');
-            // this.myHoldingsTotalInBTC = n.toFixed(6);
             this.myHoldingsTotalInBTC = n.toFixed(6);
-            // console.log('totalBTC() 4');
-            // console.log( "totalBTC() ", this.myHoldingsTotalInBTC );
         }
     }
 }
-
-
 
 export default myMixin;
