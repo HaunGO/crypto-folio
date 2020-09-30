@@ -19,6 +19,17 @@ const CoinMarketCap = require('coinmarketcap-api')
 // const apiKey = '22143f4a-7418-45df-8a03-ae32f6dc8748'
 // const client = new CoinMarketCap(apiKey)
 
+import Cryptoicon from 'vue-cryptoicon';
+// For all icons
+import icon from 'vue-cryptoicon/src/icons';
+Cryptoicon.add(icon);
+Vue.use(Cryptoicon);
+
+// selective icons 
+// import { Btc, Eth, Xrp, Eos, Bnb, Tron } from 'vue-cryptoicon/src/icons';
+// Cryptoicon.add([Btc, Eth, Xrp, Eos, Bnb, Tron]);
+// Vue.use(Cryptoicon);
+
    
 var masterWallet = new Vue({
     el: '#masterWallet',
@@ -48,6 +59,13 @@ var masterWallet = new Vue({
         console.log('primaryComponent created() ~~~~~~~~~');
         // https://www.npmjs.com/package/coinmarketcap-api
         this.CMC = new CoinMarketCap(this.cmcApiKey);
+        this.CMC.getMetadata({ id: '1' }).then(
+            function(re){
+                console.log('?? ~ ', re);
+                console.log('?? ~ ', re.data[1].logo);
+            }
+        ).catch(console.error);
+
     },
 
     mounted: function(){
@@ -71,7 +89,7 @@ var masterWallet = new Vue({
                 .catch(console.error)
 
             // https://www.npmjs.com/package/coinmarketcap-api
-            this.CMC.getTickers({ limit: 5000 })
+            this.CMC.getTickers({ limit: 10 })
                 .then(function (response) {
                     self.allCoins = response.data;
                     console.log('allCoins ', self.allCoins);

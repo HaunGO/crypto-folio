@@ -69,7 +69,7 @@ Vue.component('chart', {
                         "Pillar" : "#00beff",
                         "Dent" : "#af0000",
                         "Cardano" : "#33c8c9", 
-                        "DigiByte": "#ff0000",
+                        "DigiByte": "#06c",
                     },
                     onclick: function (d, i) {
                         // console.log("onclick", d, i);

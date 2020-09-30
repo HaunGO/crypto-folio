@@ -34,6 +34,14 @@ var myMixin = {
 
     methods: {
 
+        // THIS GETS THE LOGO
+        // this.CMC.getMetadata({ id: '1' }).then(
+        //     function (re) {
+        //         console.log('?? ~ ', re.data[1].logo);
+        //     }
+        // ).catch(console.error);
+
+
         mixinBuildWalletV2: function(_myCoins:Object, _allCoins:Array) {
             // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
             // console.log('mixinBuildWalletV2() _allCoins ', _allCoins);
@@ -52,6 +60,7 @@ var myMixin = {
                         'symbol': `${thing}`,
                         'holding': `${_myCoins[thing]}`,
                         'holding_value': 0,
+                        'logo':'',
                         // 'quote': {
                         //     'USD': {
                         //         'last_updated': '0',
@@ -68,7 +77,8 @@ var myMixin = {
                     Object.assign(thisCoin, {
                         'hasData': true,
                         'holding': `${_myCoins[thing]}`,
-                        'holding_value': thisCoin.quote.USD.price * (`${_myCoins[thing]}`)
+                        'holding_value': thisCoin.quote.USD.price * (`${_myCoins[thing]}`),
+                        'logo':'',
                     });
                 }
                 theseCoins.push(thisCoin);                

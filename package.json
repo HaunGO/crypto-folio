@@ -36,6 +36,7 @@
     "tachyons": "^4.7.4",
     "unirest": "^0.6.0",
     "vue": "^2.3.4",
+    "vue-cryptoicon": "^0.1.6",
     "vuex": "^3.1.1"
   }
 }
