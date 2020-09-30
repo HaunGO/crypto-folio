@@ -27,13 +27,159 @@ var myMixin = {
         }
     },
 
+
+
+
     methods: {
+
+
+
+
+        mixinBuildWalletV2: function(_myCoins:Object, _allCoins:Array) {
+            // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
+            // console.log('mixinBuildWalletV2() _allCoins ', _allCoins);
+            let theseCoins = [];
+
+            for (const thing in _myCoins) {
+                console.log(`${thing}: ${_myCoins[thing]}`);
+
+                let thisCoin = this.filterCoin(`${thing}`)[0];
+                console.log('thisCoin ', thisCoin);
+
+                if (thisCoin == undefined){
+                    thisCoin = {
+                        'hasData': false,
+                        'symbol': `${thing}`,
+                        'holding': `${_myCoins[thing]}`,
+                        'holding_value': 0,
+                        'quote': {
+                            'USD': {
+                                'last_updated': '0',
+                                'market_cap': 0,
+                                'percent_change_1h': 0,
+                                'percent_change_7d': 0,
+                                'percent_change_24h': 0,
+                                'price': 0,
+                                'volume_24h': 0
+                            }
+                        }
+                    }
+                }else{
+                    // thisCoin
+                    Object.assign(thisCoin, {
+                        'hasData': true,
+                        'holding': `${_myCoins[thing]}`,
+                        'holding_value': thisCoin.quote.USD.price * (`${_myCoins[thing]}`)
+                    });
+                }
+                theseCoins.push(thisCoin);                
+            }
+
+
+                // .map(c => {
+            //     // console.log('c ', c.symbol);
+            //     return Object.assign({}, c, {
+            //         holding: _myCoins[c.symbol],
+            //         holding_value: c.quote.USD.price * (_myCoins[c.symbol])
+            //     });
+            // }).sort((a, b) => {
+            //     return a.holding_value - b.holding_value;
+            // }).reverse();
+
+
+
+
+
+
+            // console.log('theseCoins ', theseCoins);
+
+            // for (const c in theseCoins){
+            //     if (theseCoins[c] == undefined){
+            //         console.log('!!!!!!!');
+            //     }
+            // }
+
+            // let allCoins = _allCoins.filter(coin => {
+            //     // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
+                
+            //     return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+            // // })
+
+            // theseCoins.map(c => {
+            //     // console.log('!!! ', _myCoins[c.symbol] );
+            //     if (c.quote == undefined){
+            //         console.log('undefineddddd' , c);
+                    
+            //         return Object.assign({}, c, {
+            //             holding: _myCoins[c.symbol],
+            //             holding_value: 0 * (_myCoins[c.symbol]),
+            //             banana: false,
+            //                 // // SPOOF TEH QUOTE.USD OBJECT OF INFO.
+            //             quote: {
+            //                 USD: {
+            //                     last_updated: "0",
+            //                     market_cap: 0,
+            //                     percent_change_1h: 0,
+            //                     percent_change_7d: 0,
+            //                     percent_change_24h: 0,
+            //                     price: 0,
+            //                     volume_24h: 0                      
+            //                 } 
+            //             }
+            //         });
+            //     }else{
+            //         console.log('its something');
+            //         return Object.assign({}, c, {
+            //             holding: _myCoins[c.symbol],
+            //             holding_value: c.quote.USD.price * (_myCoins[c.symbol])
+            //         });
+            //     }
+            // })
+
+            console.log('theseCoins', theseCoins);
+            
+            // .sort((a, b) => {
+            //     return a.holding_value - b.holding_value;
+            // }).reverse();
+
+            // console.log('allCoins', allCoins);
+
+            return theseCoins;
+ 
+
+            // return _allCoins.filter(coin => {
+            //     // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
+            //     return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+            // }).map(c => {
+            //     // console.log('c ', c.symbol);
+            //     return Object.assign({}, c, {
+            //         holding: _myCoins[c.symbol],
+            //         holding_value: c.quote.USD.price * (_myCoins[c.symbol])
+            //     });
+            // }).sort((a, b) => {
+            //     return a.holding_value - b.holding_value;
+            // }).reverse();
+
+        },
+
         mixinBuildWallet: function(_myCoins, _allCoins) {
-            // console.log('_myCoins ', _myCoins);
+            console.log('mixinBuildWallet() _myCoins ', _myCoins);
+            
+
+            // FILTERS THOUGH ALL OF THE COINS AND CHECK IF ONE OF MY COINS IS ONE OF THEM.
             return _allCoins.filter(coin => {
-                // console.log('!@!@!@!@!! ', Object.keys(_myCoins).indexOf(coin.symbol));
-                return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+                // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
+                
+                // return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+                if (Object.keys(_myCoins).indexOf(coin.symbol) >= 0){
+                    // console.log('YES! ', coin, _myCoins);
+                    return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+                }else{
+                    // console.log('no ', coin, _myCoins);
+                    return null;
+                }
             }).map(c => {
+                // console.log('c ', c.symbol);
                 return Object.assign({}, c, {
                     holding: _myCoins[c.symbol],
                     holding_value: c.quote.USD.price * (_myCoins[c.symbol])
@@ -42,6 +188,17 @@ var myMixin = {
                 return a.holding_value - b.holding_value;
             }).reverse();
         },
+
+
+
+
+
+
+
+
+
+
+
 
         // RETURNS ONLY THE COIN OBJECT YOU WANT:
         filterCoin: function(x){

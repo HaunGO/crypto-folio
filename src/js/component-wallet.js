@@ -27,9 +27,9 @@ Vue.component('wallet', {
     },
     methods:{
         buildWallet(){            
-            var useThis = this.holding;
-            this.thisWallet = this.mixinBuildWallet(
-                useThis,
+            var thisWalletHolding = this.holding;
+            this.thisWallet = this.mixinBuildWalletV2(
+                thisWalletHolding,
                 this.$store.getters.allCoins
             );
             this.totalUSD(this.thisWallet);

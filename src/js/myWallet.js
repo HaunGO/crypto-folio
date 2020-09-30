@@ -166,7 +166,7 @@ var masterWallet = new Vue({
 
                     store.commit('addAllCoins', self.allCoins);
                     self.masterWallet = self.mixinBuildWallet(self.totalHoldings, self.allCoins);
-                    console.log('data is available', self.masterWallet);
+                    // console.log('data is available', self.masterWallet);
 
                     Vue.nextTick(function () {
                         EventBus.$emit(
