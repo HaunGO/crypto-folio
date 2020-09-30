@@ -68,7 +68,8 @@ Vue.component('chart', {
                         "Veritaseum" : "#ff991d",
                         "Pillar" : "#00beff",
                         "Dent" : "#af0000",
-                        "Cardano" : "#33c8c9"
+                        "Cardano" : "#33c8c9", 
+                        "DigiByte": "#ff0000",
                     },
                     onclick: function (d, i) {
                         // console.log("onclick", d, i);

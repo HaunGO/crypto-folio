@@ -24,16 +24,15 @@ var myMixin = {
                 num = (n*1).toFixed(3).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'); 
             }
             return num;
-        }
+        },
+
+        formatWithCommas: function (x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
     },
 
 
-
-
     methods: {
-
-
-
 
         mixinBuildWalletV2: function(_myCoins:Object, _allCoins:Array) {
             // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
@@ -41,31 +40,31 @@ var myMixin = {
             let theseCoins = [];
 
             for (const thing in _myCoins) {
-                console.log(`${thing}: ${_myCoins[thing]}`);
+                // console.log(`${thing}: ${_myCoins[thing]}`);
 
                 let thisCoin = this.filterCoin(`${thing}`)[0];
-                console.log('thisCoin ', thisCoin);
+                // console.log('thisCoin ', thisCoin);
 
                 if (thisCoin == undefined){
                     thisCoin = {
                         'hasData': false,
+                        'name': 'name_'+`${thing}`,
                         'symbol': `${thing}`,
                         'holding': `${_myCoins[thing]}`,
                         'holding_value': 0,
-                        'quote': {
-                            'USD': {
-                                'last_updated': '0',
-                                'market_cap': 0,
-                                'percent_change_1h': 0,
-                                'percent_change_7d': 0,
-                                'percent_change_24h': 0,
-                                'price': 0,
-                                'volume_24h': 0
-                            }
-                        }
+                        // 'quote': {
+                        //     'USD': {
+                        //         'last_updated': '0',
+                        //         'market_cap': 0,
+                        //         'percent_change_1h': 0,
+                        //         'percent_change_7d': 0,
+                        //         'percent_change_24h': 0,
+                        //         'price': 0,
+                        //         'volume_24h': 0
+                        //     }
+                        // }
                     }
                 }else{
-                    // thisCoin
                     Object.assign(thisCoin, {
                         'hasData': true,
                         'holding': `${_myCoins[thing]}`,
@@ -75,119 +74,36 @@ var myMixin = {
                 theseCoins.push(thisCoin);                
             }
 
-
-                // .map(c => {
-            //     // console.log('c ', c.symbol);
-            //     return Object.assign({}, c, {
-            //         holding: _myCoins[c.symbol],
-            //         holding_value: c.quote.USD.price * (_myCoins[c.symbol])
-            //     });
-            // }).sort((a, b) => {
-            //     return a.holding_value - b.holding_value;
-            // }).reverse();
-
-
-
-
-
-
-            // console.log('theseCoins ', theseCoins);
-
-            // for (const c in theseCoins){
-            //     if (theseCoins[c] == undefined){
-            //         console.log('!!!!!!!');
-            //     }
-            // }
-
-            // let allCoins = _allCoins.filter(coin => {
-            //     // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
-                
-            //     return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
-            // // })
-
-            // theseCoins.map(c => {
-            //     // console.log('!!! ', _myCoins[c.symbol] );
-            //     if (c.quote == undefined){
-            //         console.log('undefineddddd' , c);
-                    
-            //         return Object.assign({}, c, {
-            //             holding: _myCoins[c.symbol],
-            //             holding_value: 0 * (_myCoins[c.symbol]),
-            //             banana: false,
-            //                 // // SPOOF TEH QUOTE.USD OBJECT OF INFO.
-            //             quote: {
-            //                 USD: {
-            //                     last_updated: "0",
-            //                     market_cap: 0,
-            //                     percent_change_1h: 0,
-            //                     percent_change_7d: 0,
-            //                     percent_change_24h: 0,
-            //                     price: 0,
-            //                     volume_24h: 0                      
-            //                 } 
-            //             }
-            //         });
-            //     }else{
-            //         console.log('its something');
-            //         return Object.assign({}, c, {
-            //             holding: _myCoins[c.symbol],
-            //             holding_value: c.quote.USD.price * (_myCoins[c.symbol])
-            //         });
-            //     }
-            // })
-
-            console.log('theseCoins', theseCoins);
-            
-            // .sort((a, b) => {
-            //     return a.holding_value - b.holding_value;
-            // }).reverse();
-
-            // console.log('allCoins', allCoins);
-
             return theseCoins;
- 
-
-            // return _allCoins.filter(coin => {
-            //     // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
-            //     return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
-            // }).map(c => {
-            //     // console.log('c ', c.symbol);
-            //     return Object.assign({}, c, {
-            //         holding: _myCoins[c.symbol],
-            //         holding_value: c.quote.USD.price * (_myCoins[c.symbol])
-            //     });
-            // }).sort((a, b) => {
-            //     return a.holding_value - b.holding_value;
-            // }).reverse();
 
         },
 
-        mixinBuildWallet: function(_myCoins, _allCoins) {
-            console.log('mixinBuildWallet() _myCoins ', _myCoins);
+        // OLD VERSION.. DEPRICATED.
+        // mixinBuildWallet: function(_myCoins, _allCoins) {
+        //     console.log('mixinBuildWallet() _myCoins ', _myCoins);
             
-
-            // FILTERS THOUGH ALL OF THE COINS AND CHECK IF ONE OF MY COINS IS ONE OF THEM.
-            return _allCoins.filter(coin => {
-                // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
+        //     // FILTERS THOUGH ALL OF THE COINS AND CHECK IF ONE OF MY COINS IS ONE OF THEM.
+        //     return _allCoins.filter(coin => {
+        //         // console.log('~!~ ', coin.symbol, Object.keys(_myCoins).indexOf(coin.symbol));
                 
-                // return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
-                if (Object.keys(_myCoins).indexOf(coin.symbol) >= 0){
-                    // console.log('YES! ', coin, _myCoins);
-                    return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
-                }else{
-                    // console.log('no ', coin, _myCoins);
-                    return null;
-                }
-            }).map(c => {
-                // console.log('c ', c.symbol);
-                return Object.assign({}, c, {
-                    holding: _myCoins[c.symbol],
-                    holding_value: c.quote.USD.price * (_myCoins[c.symbol])
-                });
-            }).sort((a, b) => {
-                return a.holding_value - b.holding_value;
-            }).reverse();
-        },
+        //         // return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+        //         if (Object.keys(_myCoins).indexOf(coin.symbol) >= 0){
+        //             // console.log('YES! ', coin, _myCoins);
+        //             return Object.keys(_myCoins).indexOf(coin.symbol) >= 0;
+        //         }else{
+        //             // console.log('no ', coin, _myCoins);
+        //             return null;
+        //         }
+        //     }).map(c => {
+        //         // console.log('c ', c.symbol);
+        //         return Object.assign({}, c, {
+        //             holding: _myCoins[c.symbol],
+        //             holding_value: c.quote.USD.price * (_myCoins[c.symbol])
+        //         });
+        //     }).sort((a, b) => {
+        //         return a.holding_value - b.holding_value;
+        //     }).reverse();
+        // },
 
 
 
@@ -210,31 +126,23 @@ var myMixin = {
             })
         }, 
  
-        formatAsUSD: function(n){
-            let num = (n*1).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-            // if the amount is less than $0.10, add an extra decimal point.
-            if (num < 0.10) {
-                num = (n*1).toFixed(3).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-            }
-            return num;
-        },
 
         // THIS CREATES THE APPROPRIATE CLASSNAME FOR THE ICON
-        coinClass: function(c){
-            let icon;
-            switch(c) {
-                case "EOS":
-                case "ADA":
-                case "RDD":
-                case "OMG":
-                case "SALT":
-                    icon = c;
-                    break;
-                default:
-                    icon = c+'-alt';
-            }
-            return icon;
-        },
+        // coinClass: function(c){
+        //     let icon;
+        //     switch(c) {
+        //         case "EOS":
+        //         case "ADA":
+        //         case "RDD":
+        //         case "OMG":
+        //         case "SALT":
+        //             icon = c;
+        //             break;
+        //         default:
+        //             icon = c+'-alt';
+        //     }
+        //     return icon;
+        // },
 
         wordifyNumber: function(n){
             // console.log( self.wordifyNumber(419281384539234123) );
