@@ -18,12 +18,13 @@ Vue.component('wallet', {
             </div>`,
   
     created () {
-        EventBus.$on('on-data-has-loaded', this.buildWallet );
+        EventBus.$on('on-data-has-loaded', this.buildWallet);
         
         // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
         this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
+
     },
     methods:{
         buildWallet(){            

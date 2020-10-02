@@ -9,6 +9,7 @@ Vue.component('coin', {
         `<div class="flex">
             <div class="coinBox pa1 ma1 tc"  ref="coin-{{coin.symbol}}" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
                 <div class="fw7">{{ coin.symbol }}</div>
+                <div class="f6 fw1">{{ coin.logo }}</div>
                 <div class="">{{ coin.holding | formatWithCommas }}</div>
                 <div v-if="coin.hasData">
                     <div class="">$\{{ coin.holding_value | formatUSD }}</div>

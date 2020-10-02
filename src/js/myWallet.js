@@ -14,23 +14,26 @@ import './component-coin.js';
 import './component-chart.js';
 import './component-totals.js';
 
+
 // https://www.npmjs.com/package/coinmarketcap-api
-const CoinMarketCap = require('coinmarketcap-api')
+const CoinMarketCap = require('coinmarketcap-api');
 // const apiKey = '22143f4a-7418-45df-8a03-ae32f6dc8748'
 // const client = new CoinMarketCap(apiKey)
-
-import Cryptoicon from 'vue-cryptoicon';
-// For all icons
-import icon from 'vue-cryptoicon/src/icons';
-Cryptoicon.add(icon);
-Vue.use(Cryptoicon);
-
+// 
+// import Cryptoicon from 'vue-cryptoicon';
+// // For all icons
+// import icon from 'vue-cryptoicon/src/icons';
+// Cryptoicon.add(icon);
+// Vue.use(Cryptoicon);
+//  
 // selective icons 
 // import { Btc, Eth, Xrp, Eos, Bnb, Tron } from 'vue-cryptoicon/src/icons';
 // Cryptoicon.add([Btc, Eth, Xrp, Eos, Bnb, Tron]);
 // Vue.use(Cryptoicon);
+// 
+// console.log('74774747447474747474747');
 
-   
+
 var masterWallet = new Vue({
     el: '#masterWallet',
     delimiters: ['${', '}'],
@@ -44,6 +47,8 @@ var masterWallet = new Vue({
             total24HrVolume: 0,
 
             allCoins: [],
+            //?
+            allMyCoins: [],
             bitcoinPrice: 0,
             thisWallet: null,
             masterWallet: null,
@@ -58,18 +63,28 @@ var masterWallet = new Vue({
     created: function() {
         console.log('primaryComponent created() ~~~~~~~~~');
         // https://www.npmjs.com/package/coinmarketcap-api
-        this.CMC = new CoinMarketCap(this.cmcApiKey);
-        this.CMC.getMetadata({ id: '1' }).then(
-            function(re){
-                console.log('?? ~ ', re);
-                console.log('?? ~ ', re.data[1].logo);
-            }
-        ).catch(console.error);
+        // this.CMC = new CoinMarketCap(this.cmcApiKey,{
+            // 'headers': {
+            //     'X-CMC_PRO_API_KEY': this.cmcApiKey,
+            //     'Access-Control-Allow-Origin': '*'
+            // }
+        // });
+        
+        // this.CMC.getMetadata({ id: '1' }).then(
+        //     function(re){
+        //         console.log('~~~~~~~~~~~~~~~~ ~ ', re);
+        //         console.log('~~~~~~~~~~~~~~~~ ~ ', re.data[1].logo);
+        //     }
+        // ).catch(console.error);
 
     },
 
     mounted: function(){
-        this.fetchData2();
+        console.log('mounted');
+        // this.fetchData2();
+    },
+    updated: function(){
+        console.log('updated');
     },
 
     methods: {
@@ -89,21 +104,33 @@ var masterWallet = new Vue({
                 .catch(console.error)
 
             // https://www.npmjs.com/package/coinmarketcap-api
-            this.CMC.getTickers({ limit: 10 })
+            // CMC api call credits are a valuabe.   example( {limit:100} = 1      {limit:1000} = 5   
+            this.CMC.getTickers({ limit: 100 })
                 .then(function (response) {
                     self.allCoins = response.data;
                     console.log('allCoins ', self.allCoins);
-
+                }).then(function(response) {
                     store.commit('addAllCoins', self.allCoins);
-                    self.masterWallet = self.mixinBuildWalletV2(self.totalHoldings, self.allCoins);
 
+
+                    // self.masterWallet = self.mixinBuildWalletV2(self.totalHoldings, self.allCoins);
+                }).then(function(response) {
                     Vue.nextTick(function () {
                         EventBus.$emit(
                             "on-data-has-loaded"
-                        );
+                            );
+                        })
+                        console.log('?!?!? ', store.allMyCoins);
+                        // self.allMyCoins = self.store.allMyCoins;
                     })
-                })
                 .catch(console.error)
+                    
+                    
+                    
+
+
+
+
         },
     }
 })

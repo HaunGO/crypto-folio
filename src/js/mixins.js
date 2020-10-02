@@ -35,12 +35,20 @@ var myMixin = {
     methods: {
 
         // THIS GETS THE LOGO
-        // this.CMC.getMetadata({ id: '1' }).then(
-        //     function (re) {
-        //         console.log('?? ~ ', re.data[1].logo);
-        //     }
-        // ).catch(console.error);
+        addLogos: function(_coins){
+            console.log('addLogos();', _coins);
 
+            // for(const coin in _coins){
+            //     console.log(coin);
+
+                // this.$root.CMC.getMetadata({ symbol: 'BTC' }).then(
+                //     function(re) {
+                //         console.log('?? ~ re ~ ', re.data[1].logo);
+                //     }).catch(console.error);
+                
+            // }
+        },
+                
 
         mixinBuildWalletV2: function(_myCoins:Object, _allCoins:Array) {
             // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
@@ -51,8 +59,6 @@ var myMixin = {
                 // console.log(`${thing}: ${_myCoins[thing]}`);
 
                 let thisCoin = this.filterCoin(`${thing}`)[0];
-                // console.log('thisCoin ', thisCoin);
-
                 if (thisCoin == undefined){
                     thisCoin = {
                         'hasData': false,
@@ -60,29 +66,38 @@ var myMixin = {
                         'symbol': `${thing}`,
                         'holding': `${_myCoins[thing]}`,
                         'holding_value': 0,
-                        'logo':'',
-                        // 'quote': {
-                        //     'USD': {
-                        //         'last_updated': '0',
-                        //         'market_cap': 0,
-                        //         'percent_change_1h': 0,
-                        //         'percent_change_7d': 0,
-                        //         'percent_change_24h': 0,
-                        //         'price': 0,
-                        //         'volume_24h': 0
-                        //     }
-                        // }
+                        'logo': ''
                     }
                 }else{
-                    Object.assign(thisCoin, {
-                        'hasData': true,
-                        'holding': `${_myCoins[thing]}`,
-                        'holding_value': thisCoin.quote.USD.price * (`${_myCoins[thing]}`),
-                        'logo':'',
-                    });
+                    
+                    let thisHolding = `${_myCoins[thing]}`;
+                    let thisHoldingValue = `${_myCoins[thing]}`;
+                    // let thisLogoUrl = '';
+
+                    console.log('thisCoin ', thisCoin.id);
+
+                    // this.$root.CMC.getMetadata({ id: thisCoin.id })
+                        // .then(function (r) {
+                            // console.log('r ', r);
+                            // thisLogoUrl = r;
+                            Object.assign(thisCoin, {
+                                'hasData': true,
+                                'holding': thisHolding,
+                                'holding_value': thisCoin.quote.USD.price * thisHoldingValue,
+                                'logo': 'thisLogoUrl',
+                            });
+                        // });
+ 
+                    
+
                 }
+
+
                 theseCoins.push(thisCoin);                
             }
+
+
+            this.addLogos(theseCoins);
 
             return theseCoins;
 

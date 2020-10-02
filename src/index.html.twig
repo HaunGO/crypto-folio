@@ -15,16 +15,13 @@
             <div class="">Bitcoin Dominance: <strong>${bitcoinDominance}</strong></div>
         </div>
 
+        <template>
+            <cryptoicon symbol="btc" size="24" />
+            <cryptoicon symbol="btc" size="24" color="blue" />
+            <cryptoicon symbol="btc" size="24" color="#000" />
+        </template>
 
-<template>
-    <!-- Bitcoin color icon-->
-    <cryptoicon symbol="btc" size="24" />
-    <!-- Bitcoin blue color icon-->
-    <cryptoicon symbol="btc" size="24" color="blue" />
-    <!-- Bitcoin  black (#000)  icon-->
-    <cryptoicon symbol="btc" size="24" color="#000" />
-</template>
-
+        
         <wallet :holding='totalHoldings'>
             <h3>Master Wallet</h3>
             <chart class="bigchart"></chart>
@@ -32,7 +29,7 @@
             <coinbox></coinbox>
         </wallet>
 
-
+ 
         <div class="flex flex-row flex-wrap justify-center">
 
             <wallet :holding='{ "BTC": 0.015, "LTC":1}'>

@@ -6,7 +6,9 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     count: 0,
-    allCoins: []
+    allCoins: [],
+    //?
+    allMyCoins: [],
   },
   mutations: {
     increment(state) {
@@ -14,11 +16,19 @@ const store = new Vuex.Store({
     },
     addAllCoins(state, coin) {
       state.allCoins = coin;
+    },
+    //?
+    addAllMyCoins(state, coin) {
+      state.allMyCoins = coin;
     }
   },
   getters: {
     allCoins: state => {
       return state.allCoins;
+    },
+    //?
+    allMyCoins: state => {
+      return state.allMyCoins;
     }
   }
 });
