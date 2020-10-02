@@ -63,12 +63,12 @@ var masterWallet = new Vue({
     created: function() {
         console.log('primaryComponent created() ~~~~~~~~~');
         // https://www.npmjs.com/package/coinmarketcap-api
-        // this.CMC = new CoinMarketCap(this.cmcApiKey,{
-            // 'headers': {
-            //     'X-CMC_PRO_API_KEY': this.cmcApiKey,
-            //     'Access-Control-Allow-Origin': '*'
-            // }
-        // });
+        this.CMC = new CoinMarketCap(this.cmcApiKey,{
+            'headers': {
+                'X-CMC_PRO_API_KEY': this.cmcApiKey,
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
         
         // this.CMC.getMetadata({ id: '1' }).then(
         //     function(re){
@@ -81,13 +81,15 @@ var masterWallet = new Vue({
 
     mounted: function(){
         console.log('mounted');
-        // this.fetchData2();
+
+        this.fetchData2();
     },
     updated: function(){
         console.log('updated');
     },
 
     methods: {
+
         fetchData2: function(){
             var self = this;
             self.bitcoinDominance = 0;

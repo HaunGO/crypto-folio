@@ -17,7 +17,10 @@ Vue.component('wallet', {
                 <slot></slot>
             </div>`,
   
-    created () {
+    mounted () {
+
+        this.prebuildWallet(this.holding);
+
         EventBus.$on('on-data-has-loaded', this.buildWallet);
         
         // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
@@ -27,6 +30,12 @@ Vue.component('wallet', {
 
     },
     methods:{
+        prebuildWallet(thisHolding){
+            this.thisWallet = this.mixinPrebuildWallet(thisHolding);
+            EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
+            // EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
+            console.log('prebuildWallet() this.thisWallet', this.thisWallet);
+        },
         buildWallet(){            
             var thisWalletHolding = this.holding;
             this.thisWallet = this.mixinBuildWalletV2(

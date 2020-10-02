@@ -31,7 +31,7 @@ var myMixin = {
         },
     },
 
-
+ 
     methods: {
 
         // THIS GETS THE LOGO
@@ -48,7 +48,25 @@ var myMixin = {
                 
             // }
         },
-                
+
+        mixinPrebuildWallet: function(_myCoins:Object ){
+            console.log('mixinPrebuildWallet()', _myCoins);
+            let theseCoins = [];
+            for (const thing in _myCoins) {
+                let thisCoin = {
+                    'hasData': false,
+                    'name': 'name_' + `${thing}`,
+                    'symbol': `${thing}`,
+                    'holding': `${_myCoins[thing]}`,
+                    'holding_value': 0,
+                    'logo': '.jpg'
+                }
+                // console.log(thisCoin);
+                theseCoins.push(thisCoin);
+            }
+            console.log('thesePrebuildCoins ', theseCoins);
+            return theseCoins;        
+        },
 
         mixinBuildWalletV2: function(_myCoins:Object, _allCoins:Array) {
             // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
