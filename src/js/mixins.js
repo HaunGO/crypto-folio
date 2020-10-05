@@ -5,6 +5,7 @@ var myMixin = {
           myWallet: [],
           bitcoinPrice: 0,
           totalHoldings: {},
+          masterWallet: null,
         };
     },
 
@@ -36,7 +37,7 @@ var myMixin = {
 
         // THIS GETS THE LOGO
         addLogos: function(_coins){
-            console.log('addLogos();', _coins);
+            // console.log('addLogos();', _coins);
 
             // for(const coin in _coins){
             //     console.log(coin);
@@ -48,9 +49,9 @@ var myMixin = {
                 
             // }
         },
-
+ 
         mixinPrebuildWallet: function(_myCoins:Object ){
-            console.log('mixinPrebuildWallet()', _myCoins);
+            // console.log('mixinPrebuildWallet()', _myCoins);
             let theseCoins = [];
             for (const thing in _myCoins) {
                 let thisCoin = {
@@ -64,7 +65,7 @@ var myMixin = {
                 // console.log(thisCoin);
                 theseCoins.push(thisCoin);
             }
-            console.log('thesePrebuildCoins ', theseCoins);
+            // console.log('thesePrebuildCoins ', theseCoins);
             return theseCoins;        
         },
 

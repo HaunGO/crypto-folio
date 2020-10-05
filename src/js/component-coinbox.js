@@ -24,9 +24,9 @@ Vue.component('coinbox', {
 
     methods:{
         setupEvents: function () {
-            console.log('coin > setupEvents()');
+            // console.log('coin > setupEvents()');
             EventBus.$on(`wallet-prebuilt-${this.$parent._uid}`, (w) => {
-                console.log('wallet prebuilt event ');
+                // console.log('wallet prebuilt event ');
                 this.thisWallet = w;
             });
             EventBus.$on(`wallet-built-${this.$parent._uid}`, (w) => {

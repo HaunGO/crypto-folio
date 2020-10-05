@@ -2,14 +2,16 @@ import Vue from "vue/dist/vue.esm.js";
 import EventBus from './eventBus.js';
 import myMixin from './mixins.js';
 
-Vue.component('wallet', {
+Vue.component('masterwallet', {
     mixins: [myMixin],
     data: function () {
         return {
             myHoldingsTotalInUSD: 0,
             myHoldingsTotalInBTC: 0,
             thisWallet: null,
-            isMasterWallet: false
+            isMasterWallet: true,
+            // totalHoldings: this.$root.totalholdings,
+            totalHoldings: null,
         }
     },
     props: [ 'holding', 'title'],
@@ -19,7 +21,7 @@ Vue.component('wallet', {
             </div>`,
   
     mounted(){
-        // console.log('mounted !!!!!!!!!!!!!!!!!! holding ', this.holding);
+        console.log('mounted !!!!!!!!!!!!!!!!!! holding ', this.holding);
         // if(this.holding == undefined){
         //     this.isMasterWallet = true;
         //     this.holding = this.$root.totalHoldings;
@@ -28,14 +30,22 @@ Vue.component('wallet', {
         //     this.$root.masterWallet = this;
         //     console.log('!@#!@#!@# ', this.$root.masterWallet);
         // }
-        this.prebuildWallet(this.holding);
+
+        // console.log('!@#!@#!@# ', this.totalHoldings);
+
+        this.prebuildWallet(this.totalHoldings);
         EventBus.$on('on-data-has-loaded', this.buildWallet);
         // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
         // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
         // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
         // this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
     },
- 
+    updated(){
+        // console.log('!@#!@#!@# updated ', this.$root.totalHoldings);
+        if (this.$root.totalHoldings != null){
+            this.prebuildWallet(this.$root.totalHoldings);  
+        }
+    },
     created(){
         // this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
         // console.log('created ----- totalHoldings ', this.$root.totalHoldings);
@@ -44,10 +54,9 @@ Vue.component('wallet', {
     methods:{
 
         prebuildWallet(thisHolding){
-            if (thisHolding != null){
                 //     thisHolding = this.$root.totalHoldings;    
                 // }
-                this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, thisHolding);
+                // this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, thisHolding);
                 this.thisWallet = this.mixinPrebuildWallet(thisHolding);
                 // EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
                 // Vue.nextTick(function () {
@@ -57,7 +66,6 @@ Vue.component('wallet', {
 
                 // console.log('totalHoldings ', this.$root.totalHoldings);
                 // console.log('prebuildWallet() this.thisWallet', this.thisWallet);
-            }
         },
 
 

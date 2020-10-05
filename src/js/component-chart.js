@@ -12,10 +12,14 @@ Vue.component('chart', {
         }
     },
     mixins: [myMixin],
-    template: `<div ref='chart' class="chart tc "> [chart] </div>`,
+    template: `<div ref='chart' class="chart tc "></div>`,
 
-    mounted: function(){
+    created: function(){
         this.setupEvents();
+    },
+
+    updated: function(){
+        console.log('chart component was updated');
     },
 
 
@@ -28,16 +32,58 @@ Vue.component('chart', {
                 this.thisChart.defocus(c);
                 this.thisChart.revert();
             });
+            
+            EventBus.$on(`wallet-prebuilt-${this.$parent._uid}`, this.prebuildChart );
+            
             EventBus.$on(`wallet-built-${this.$parent._uid}`, this.buildChart );
         },
 
+
+        prebuildChart: function(_thisWallet_){
+            console.log('prebuildChart()', _thisWallet_);
+
+            var chartDiv = this.$refs.chart;
+            var chartData = [];
+
+            chartData = chartData.concat(_thisWallet_.filter(coin => 1 > 0).map(coin => [coin.name, 1]));
+
+            this.thisChart = bb.generate({
+                bindto: chartDiv,
+                donut: {
+                    // title: "prebuilt",
+                    labels: false,
+                    expand: true,
+                    label: {
+                        show: false
+                        // ratio: 0.01,
+                    }
+                },
+                legend:{
+                    show:false,
+                    position:"bottom",
+                },
+                data: {
+                    type: "donut",
+                    labels: false,
+                    columns: chartData,
+                },
+            });
+        },
+
+
+
+
+
+
         buildChart: function(_thisWallet_){
-            // console.log("~! component-chart : buildChart(){} ", _thisWallet_);
+            console.log("~! component-chart : buildChart(){} ", _thisWallet_);
             var chartDiv = this.$refs.chart;
             var chartData = [];
 
             chartData = chartData.concat( _thisWallet_.filter(coin => coin.holding > 0 ).map( coin => [coin.name, coin.holding_value] ) );
 
+
+            // ---- maybe this should be  bb.update() or similar since this now being prebuilt.
             this.thisChart = bb.generate({
                 bindto: chartDiv,
                 donut: {

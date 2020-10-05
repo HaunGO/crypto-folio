@@ -9,6 +9,7 @@ import store from "./store.js";
 
 import './component-jsonwallets.js';
 import './component-wallet.js';
+import './component-masterWallet.js';
 import './component-coinbox.js';
 import './component-coin.js';
 import './component-chart.js';
@@ -34,14 +35,14 @@ const CoinMarketCap = require('coinmarketcap-api');
 // console.log('74774747447474747474747');
 
 
-var masterWallet = new Vue({
-    el: '#masterWallet',
+var folio = new Vue({
+    el: '#myFolio',
     delimiters: ['${', '}'],
     mixins: [myMixin],
     store: store,
     data: function () {
         return {
-            wallet: "wallet",
+            // wallet: "wallet",
             globalMarketCap: 0,
             bitcoinDominance: 0,
             total24HrVolume: 0,
@@ -50,8 +51,8 @@ var masterWallet = new Vue({
             //?
             allMyCoins: [],
             bitcoinPrice: 0,
-            thisWallet: null,
-            masterWallet: null,
+            // thisWallet: null,
+            // masterWallet: null,
             fetchTick: 0,
             //   descrete:true
 
@@ -68,27 +69,35 @@ var masterWallet = new Vue({
                 'X-CMC_PRO_API_KEY': this.cmcApiKey,
                 'Access-Control-Allow-Origin': '*'
             }
-        });
-        
+        });        
         // this.CMC.getMetadata({ id: '1' }).then(
         //     function(re){
         //         console.log('~~~~~~~~~~~~~~~~ ~ ', re);
         //         console.log('~~~~~~~~~~~~~~~~ ~ ', re.data[1].logo);
         //     }
         // ).catch(console.error);
-
     },
 
     mounted: function(){
-        console.log('mounted');
-
-        this.fetchData2();
+        console.log('main folio mounted');
+        
+        this.prebuildWalletData();        
+        
+        // this.fetchData2();
     },
+
     updated: function(){
-        console.log('updated');
+
+        console.log('main folio updated', this.$root.masterWallet); 
+
     },
 
     methods: {
+
+        prebuildWalletData(){
+            console.log('prebuildWalletData( ', this.$root.totalHoldings);
+            // console.log('prebuildWalletData( ', this.masterWallet);
+        },
 
         fetchData2: function(){
             var self = this;
@@ -111,20 +120,17 @@ var masterWallet = new Vue({
                 .then(function (response) {
                     self.allCoins = response.data;
                     console.log('allCoins ', self.allCoins);
+
                 }).then(function(response) {
                     store.commit('addAllCoins', self.allCoins);
 
-
-                    // self.masterWallet = self.mixinBuildWalletV2(self.totalHoldings, self.allCoins);
                 }).then(function(response) {
                     Vue.nextTick(function () {
-                        EventBus.$emit(
-                            "on-data-has-loaded"
-                            );
-                        })
-                        console.log('?!?!? ', store.allMyCoins);
-                        // self.allMyCoins = self.store.allMyCoins;
+                        EventBus.$emit("on-data-has-loaded");
                     })
+                    // console.log('?!?!? ', store.allMyCoins);
+                    // self.allMyCoins = self.store.allMyCoins;
+                })
                 .catch(console.error)
                     
                     
