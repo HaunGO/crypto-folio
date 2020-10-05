@@ -21,7 +21,7 @@ Vue.component('masterwallet', {
             </div>`,
   
     mounted(){
-        console.log('mounted !!!!!!!!!!!!!!!!!! holding ', this.holding);
+        // console.log('mounted !!!!!!!!!!!!!!!!!! holding ', this.holding);
         // if(this.holding == undefined){
         //     this.isMasterWallet = true;
         //     this.holding = this.$root.totalHoldings;

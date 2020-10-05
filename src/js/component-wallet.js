@@ -9,54 +9,46 @@ Vue.component('wallet', {
             myHoldingsTotalInUSD: 0,
             myHoldingsTotalInBTC: 0,
             thisWallet: null,
-            isMasterWallet: false
+            totalHoldings: null,
+            isMasterWallet: false,
+            // holding:null,
         }
     },
-    props: [ 'holding', 'title'],
+    props: [ 'holding', 'title', 'master'],
     template:
             `<div class="walletBox ma1 tc" >
                 <slot></slot>
             </div>`,
   
     mounted(){
-        // console.log('mounted !!!!!!!!!!!!!!!!!! holding ', this.holding);
-        // if(this.holding == undefined){
-        //     this.isMasterWallet = true;
-        //     this.holding = this.$root.totalHoldings;
-        // }
-        // if (this.holding === "totalHoldings"){
-        //     this.$root.masterWallet = this;
-        //     console.log('!@#!@#!@# ', this.$root.masterWallet);
-        // }
-        this.prebuildWallet(this.holding);
-        EventBus.$on('on-data-has-loaded', this.buildWallet);
-        // USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
-        // this.$root.totalHoldings = {...this.$root.totalHoldings, ...this.holding};
-        // SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
-        // this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
+        if (this.master){
+            this.isMasterWallet = true;
+            // this.holding = this.$root.totalHoldings;
+        }else{
+            this.prebuildWallet(this.holding);
+            EventBus.$on('on-data-has-loaded', this.buildWallet);
+        }
     },
- 
     created(){
-        // this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, this.holding);
         // console.log('created ----- totalHoldings ', this.$root.totalHoldings);
+    },
+    updated() {
+        // console.log('!@#!@#!@# updated ', this.$root.totalHoldings);
+        if ((this.isMasterWallet) && (this.$root.totalHoldings != null)) {
+            this.prebuildWallet(this.$root.totalHoldings);
+        }
     },
 
     methods:{
 
         prebuildWallet(thisHolding){
+            // console.log('totalHoldings ', this.$root.totalHoldings);
+            // console.log('prebuildWallet() this.thisWallet', this.thisWallet);
             if (thisHolding != null){
-                //     thisHolding = this.$root.totalHoldings;    
-                // }
+
                 this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, thisHolding);
                 this.thisWallet = this.mixinPrebuildWallet(thisHolding);
-                // EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
-                // Vue.nextTick(function () {
-                    // EventBus.$emit("on-data-has-loaded");
                     EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
-                // })
-
-                // console.log('totalHoldings ', this.$root.totalHoldings);
-                // console.log('prebuildWallet() this.thisWallet', this.thisWallet);
             }
         },
 
@@ -73,7 +65,9 @@ Vue.component('wallet', {
         },
 
 
-        /* USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.  */
+        /*  USING THE SPREAD OPERATOR (...) DOES NOT TOTAL VALUES OF REPEATED KEYS.
+            SO THIS CUSTOM mergeHoldings() FUNCTION DOES THIS.
+            USES _LODASH.JS TO MERGE OBJECTS AND COMBINE VALUES FOR ANY DUPLICATE KEY:VALUE PAIRS.  */
         mergeHoldings(o1, o2) {
             var a = Object.keys(o1);
             var b = Object.keys(o2);

@@ -65,12 +65,20 @@
    
         
         <!-- <wallet :holding='{BTC: 0.035, DGB: 73000, EOS: 10, ETH: 1.2, LTC: 1, PPT: 70, SUB: 100000, THETA: 500}'> -->
-        <masterwallet>
+        <!-- <masterwallet>
             <h3>Master Folio</h3>
             <chart class="bigchart"></chart>
             <totals></totals>
             <coinbox></coinbox>
-        </masterwallet>
+        </masterwallet> -->
+  
+
+        <wallet :master='true' >
+            <h3>Master Folio</h3>
+            <chart class="bigchart"></chart>
+            <totals></totals>
+            <coinbox></coinbox>
+        </wallet>
   
    
  
