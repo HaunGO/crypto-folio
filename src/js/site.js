@@ -1,5 +1,5 @@
 
-import  './myWallet.js';
+import  './myCryptoFolio.js';
 
 // import  './myWalletComponent.js';
 

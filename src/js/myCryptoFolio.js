@@ -18,31 +18,14 @@ import './component-totals.js';
 
 // https://www.npmjs.com/package/coinmarketcap-api
 const CoinMarketCap = require('coinmarketcap-api');
-// const apiKey = '22143f4a-7418-45df-8a03-ae32f6dc8748'
-// const client = new CoinMarketCap(apiKey)
-// 
-// import Cryptoicon from 'vue-cryptoicon';
-// // For all icons
-// import icon from 'vue-cryptoicon/src/icons';
-// Cryptoicon.add(icon);
-// Vue.use(Cryptoicon);
-//  
-// selective icons 
-// import { Btc, Eth, Xrp, Eos, Bnb, Tron } from 'vue-cryptoicon/src/icons';
-// Cryptoicon.add([Btc, Eth, Xrp, Eos, Bnb, Tron]);
-// Vue.use(Cryptoicon);
-// 
-// console.log('74774747447474747474747');
-
 
 var folio = new Vue({
-    el: '#myFolio',
+    el: '#myCryptoFolio',
     delimiters: ['${', '}'],
     mixins: [myMixin],
     store: store,
     data: function () {
         return {
-            // wallet: "wallet",
             globalMarketCap: 0,
             bitcoinDominance: 0,
             total24HrVolume: 0,
@@ -51,10 +34,7 @@ var folio = new Vue({
             //?
             allMyCoins: [],
             bitcoinPrice: 0,
-            // thisWallet: null,
-            // masterWallet: null,
             fetchTick: 0,
-            //   descrete:true
 
             cmcApiKey: '22143f4a-7418-45df-8a03-ae32f6dc8748',
             CMC: null,
@@ -80,25 +60,65 @@ var folio = new Vue({
 
     mounted: function(){
         console.log('main folio mounted');
-        
-        this.prebuildWalletData();        
-        
-        // this.fetchData2();
+                
+        this.fetchData2();
+
     },
 
     updated: function(){
-
-        console.log('main folio updated', this.$root.masterWallet); 
-
+        console.log('main folio updated'); 
+        // console.log('main folio updated', this.$root.totalHoldings); 
+        // console.log('main folio updated', this.$root.masterWallet); 
     },
+
+
 
     methods: {
 
-        prebuildWalletData(){
-            console.log('prebuildWalletData( ', this.$root.totalHoldings);
-            // console.log('prebuildWalletData( ', this.masterWallet);
+        addLogos: function(){
+            var self = this;
+            console.log('addLogos() ', self.$root.totalHoldings);
+            let list = [];
+
+            for (const coin in self.$root.totalHoldings) {
+                // console.log(coin);
+                list.push(coin);
+                // this.$root.CMC.getMetadata({ symbol: 'BTC' }).then(
+                //     function(re) {
+                //         console.log('?? ~ re ~ ', re.data[1].logo);
+                //     }).catch(console.error);
+            }
+
+
+            console.log('list ---- ', list);
+
+
+            
+            self.CMC.getMetadata({symbol: list}).then(
+                function(response) {
+                    console.log('?? ~ response ~ ', response.data );
+                    let obj = response.data;
+                    self.$root.allMyCoinsMeta = response.data;
+
+                    for (const each in obj) {
+                        console.log(obj[each].logo);
+                        let logoUrl = obj[each].logo;
+                        let thisCoin = self.filterCoin(obj[each].symbol);
+                        // Object.assign(thisCoin[0], {
+                        //     'logo': logoUrl,
+                        // });
+                        // console.log('thisCoin with LOGO? ', thisCoin);
+                    }
+                    
+                    
+                    EventBus.$emit("on-data-has-loaded");
+
+
+                }).catch(console.error);
         },
 
+
+         
         fetchData2: function(){
             var self = this;
             self.bitcoinDominance = 0;
@@ -119,26 +139,22 @@ var folio = new Vue({
             this.CMC.getTickers({ limit: 100 })
                 .then(function (response) {
                     self.allCoins = response.data;
-                    console.log('allCoins ', self.allCoins);
+                    // console.log('allCoins ', self.allCoins);
 
                 }).then(function(response) {
                     store.commit('addAllCoins', self.allCoins);
 
+
                 }).then(function(response) {
                     Vue.nextTick(function () {
-                        EventBus.$emit("on-data-has-loaded");
+                        self.addLogos();
+                        // EventBus.$emit("on-data-has-loaded");
                     })
                     // console.log('?!?!? ', store.allMyCoins);
                     // self.allMyCoins = self.store.allMyCoins;
                 })
                 .catch(console.error)
                     
-                    
-                    
-
-
-
-
         },
     }
 })

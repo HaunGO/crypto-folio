@@ -11,7 +11,6 @@ Vue.component('wallet', {
             thisWallet: null,
             totalHoldings: null,
             isMasterWallet: false,
-            // holding:null,
         }
     },
     props: [ 'holding', 'title', 'master'],
@@ -23,11 +22,12 @@ Vue.component('wallet', {
     mounted(){
         if (this.master){
             this.isMasterWallet = true;
-            // this.holding = this.$root.totalHoldings;
+            this.$root.masterWallet = this;
         }else{
             this.prebuildWallet(this.holding);
-            EventBus.$on('on-data-has-loaded', this.buildWallet);
         }
+        // EVENT LISTENER IN myCryptoFolio.js
+        EventBus.$on('on-data-has-loaded', this.buildWallet);
     },
     created(){
         // console.log('created ----- totalHoldings ', this.$root.totalHoldings);
@@ -45,23 +45,34 @@ Vue.component('wallet', {
             // console.log('totalHoldings ', this.$root.totalHoldings);
             // console.log('prebuildWallet() this.thisWallet', this.thisWallet);
             if (thisHolding != null){
-
                 this.$root.totalHoldings = this.mergeHoldings(this.$root.totalHoldings, thisHolding);
                 this.thisWallet = this.mixinPrebuildWallet(thisHolding);
-                    EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
+                // EVENT LISTENER IN component-chart.js
+                EventBus.$emit(`wallet-prebuilt-${this._uid}`, this.thisWallet);
             }
         },
 
 
-        buildWallet(){            
-            var thisWalletHolding = this.holding;
-            this.thisWallet = this.mixinBuildWalletV2(
-                thisWalletHolding,
-                this.$store.getters.allCoins
-            );
+
+         
+        
+
+        buildWallet(){
+            // console.log('buildWallet()', this.isMasterWallet);
+            var thisWalletHolding;
+            
+            if(this.isMasterWallet){
+                thisWalletHolding = this.$root.totalHoldings;
+            }else{
+                thisWalletHolding = this.holding;
+            }
+            
+            this.thisWallet = this.mixinBuildWalletV2( thisWalletHolding, this.$store.getters.allCoins );
             this.totalUSD(this.thisWallet);
             this.totalBTC(this.thisWallet);
+
             EventBus.$emit(`wallet-built-${this._uid}`, this.thisWallet);
+
         },
 
 

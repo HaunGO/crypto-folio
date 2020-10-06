@@ -19,7 +19,7 @@ Vue.component('chart', {
     },
 
     updated: function(){
-        console.log('chart component was updated');
+        // console.log('chart component was updated');
     },
 
 
@@ -76,7 +76,7 @@ Vue.component('chart', {
 
 
         buildChart: function(_thisWallet_){
-            console.log("~! component-chart : buildChart(){} ", _thisWallet_);
+            // console.log("~! component-chart : buildChart(){} ", _thisWallet_);
             var chartDiv = this.$refs.chart;
             var chartData = [];
 

@@ -6,6 +6,7 @@ var myMixin = {
           bitcoinPrice: 0,
           totalHoldings: {},
           masterWallet: null,
+          allMyCoinsMeta: null,
         };
     },
 
@@ -36,19 +37,19 @@ var myMixin = {
     methods: {
 
         // THIS GETS THE LOGO
-        addLogos: function(_coins){
-            // console.log('addLogos();', _coins);
+        // addLogos: function(_coins){
+        //     console.log('addLogos();', _coins);
 
-            // for(const coin in _coins){
-            //     console.log(coin);
+        //     for(const coin in _coins){
+        //         console.log(coin);
 
-                // this.$root.CMC.getMetadata({ symbol: 'BTC' }).then(
-                //     function(re) {
-                //         console.log('?? ~ re ~ ', re.data[1].logo);
-                //     }).catch(console.error);
+        //         // this.$root.CMC.getMetadata({ symbol: 'BTC' }).then(
+        //         //     function(re) {
+        //         //         console.log('?? ~ re ~ ', re.data[1].logo);
+        //         //     }).catch(console.error);
                 
-            // }
-        },
+        //     }
+        // },
  
         mixinPrebuildWallet: function(_myCoins:Object ){
             // console.log('mixinPrebuildWallet()', _myCoins);
@@ -73,11 +74,13 @@ var myMixin = {
             // console.log('mixinBuildWalletV2() _myCoins ', _myCoins);
             // console.log('mixinBuildWalletV2() _allCoins ', _allCoins);
             let theseCoins = [];
+            let self = this;
 
             for (const thing in _myCoins) {
                 // console.log(`${thing}: ${_myCoins[thing]}`);
 
                 let thisCoin = this.filterCoin(`${thing}`)[0];
+
                 if (thisCoin == undefined){
                     thisCoin = {
                         'hasData': false,
@@ -85,15 +88,29 @@ var myMixin = {
                         'symbol': `${thing}`,
                         'holding': `${_myCoins[thing]}`,
                         'holding_value': 0,
-                        'logo': ''
+                        'logo': '.•.'
                     }
                 }else{
                     
+
+// THIS MAY BE THE BEST PLACE TO SPLICE IN THE LOGO INFORMATION FROM META CALL.
+
                     let thisHolding = `${_myCoins[thing]}`;
                     let thisHoldingValue = `${_myCoins[thing]}`;
-                    // let thisLogoUrl = '';
+                    let thisLogoUrl = self.$root.allMyCoinsMeta[`${thing}`].logo;
 
-                    console.log('thisCoin ', thisCoin.id);
+                    // console.log('thisCoin ', thisCoin.id);
+                    // console.log('this.$root.allMyCoinsMeta from BuildWallet ', self.$root.allMyCoinsMeta);
+                    // console.log('this.$root.allMyCoinsMeta from BuildWallet ', self.$root.allMyCoinsMeta['LTC'].logo);
+                    console.log('this.$root.allMyCoinsMeta from BuildWallet ', self.$root.allMyCoinsMeta[`${thing}`].logo);
+
+
+
+                        // let thisCoinUrl = self.filterCoin(obj[each].symbol);
+                        // // // Object.assign(thisCoin[0], {
+                        // // //     'logo': logoUrl,
+                        // });
+
 
                     // this.$root.CMC.getMetadata({ id: thisCoin.id })
                         // .then(function (r) {
@@ -103,20 +120,15 @@ var myMixin = {
                                 'hasData': true,
                                 'holding': thisHolding,
                                 'holding_value': thisCoin.quote.USD.price * thisHoldingValue,
-                                'logo': 'thisLogoUrl',
+                                'logo': thisLogoUrl,
                             });
                         // });
- 
-                    
-
+  
+                     
                 }
-
 
                 theseCoins.push(thisCoin);                
             }
-
-
-            this.addLogos(theseCoins);
 
             return theseCoins;
 
